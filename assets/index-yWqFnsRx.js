@@ -67,7 +67,7 @@ Please change the parent <Route path="${$}"> to <Route path="${$==="/"?"*":`${$}
  * LICENSE.md file in the root directory of this source tree.
  *
  * @license MIT
- */function Ub(n){return H.createElement(Z1,{flushSync:zb.flushSync,...n})}const Nb="/files",Bb={files:Nb},Hb="/profile",Lb={profile:Hb},ol={filesRoutes:Bb,profileRoutes:Lb},jb="_wrapper_10knq_11",Yb="_content_10knq_29",$0={wrapper:jb,content:Yb},qb="_menu_157fr_1",Gb="_wrapper_157fr_21",Vb="_menu__btn_157fr_37",kb="_icon_157fr_69",Xb="_title_157fr_107",$b="_selected_157fr_117",ft={menu:qb,wrapper:Gb,menu__btn:Vb,icon:kb,title:Xb,selected:$b};var Qf={exports:{}},Ke={};/**
+ */function Ub(n){return H.createElement(Z1,{flushSync:zb.flushSync,...n})}const Nb="/files",Bb={files:Nb},Hb="/profile",Lb={profile:Hb},ol={filesRoutes:Bb,profileRoutes:Lb},jb="_wrapper_10knq_11",Yb="_content_10knq_29",$0={wrapper:jb,content:Yb},qb="_menu_3bmcy_1",Gb="_wrapper_3bmcy_21",Vb="_menu__btn_3bmcy_35",kb="_icon_3bmcy_63",Xb="_title_3bmcy_97",$b="_selected_3bmcy_107",ft={menu:qb,wrapper:Gb,menu__btn:Vb,icon:kb,title:Xb,selected:$b};var Qf={exports:{}},Ke={};/**
  * @license React
  * react-is.production.js
  *
