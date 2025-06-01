@@ -1,0 +1,63 @@
+.wrapper {
+    width: 100%;
+    border: 1px solid var(--colors__border);
+    background-color: var(--colors__inside);
+    color: var(--colors__largeText);
+    border-radius: 15px;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    width: 80%;
+    height: 10%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.avatar {
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatarSkeleton {
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.153);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    font-size: 1.7rem;
+    margin-right: 10%;
+}
+
+.pulse {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

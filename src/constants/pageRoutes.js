@@ -1,16 +1,45 @@
-const files = "/files";
+const search = "/search";
 
-const filesRoutes = {
-    files: files,
+const expert = "/expert/:id";
+
+const expertRoutes = {
+    expert: expert,
 };
 
-const profile = "/profile"
+const searchRoutes = {
+    search: search,
+};
+
+const categories = "/categories";
+const category = ":subtitle";
+const categoryExpert = ":subtitle/expert/:id";
+const categoriesExpert = "expert/:id";
+
+const categoriesRoutes = {
+    categories: categories,
+    category: category,
+    categoryExpert: categoryExpert,
+    categoriesExpert: categoriesExpert,
+};
+
+const favorites = "/favorites";
+const favoritesExpert = "/favorites/expert/:id";
+
+const favoritesRoutes = {
+    favorites: favorites,
+    favoritesExpert: favoritesExpert,
+};
+
+const profile = "/profile";
 
 const profileRoutes = {
     profile: profile,
 };
 
 export const pageRoutes = {
-    filesRoutes,
+    searchRoutes,
+    categoriesRoutes,
+    favoritesRoutes,
     profileRoutes,
+    expertRoutes,
 };

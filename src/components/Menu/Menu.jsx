@@ -2,11 +2,17 @@ import React, { useState } from 'react'
 import styles from './Menu.module.css'
 import { Link } from 'react-router-dom'
 import { pageRoutes } from '../../constants/pageRoutes'
-import profile from '../../assets/icons/profile.svg'
-import files from '../../assets/icons/files.webp'
+import {
+    Abc,
+    AccountCircle,
+    MenuBook,
+    Search,
+    StarBorder,
+    ViewHeadline,
+} from '@mui/icons-material'
 
 const Menu = () => {
-    const [selected, setSelected] = useState('files')
+    const [selected, setSelected] = useState('category')
 
     const hapticFeedback = () => {
         if (window.Telegram?.WebApp?.HapticFeedback?.impactOccurred) {
@@ -21,23 +27,59 @@ const Menu = () => {
     return (
         <div className={styles.menu}>
             <div className={styles.wrapper}>
-                <Link
-                    to={pageRoutes.filesRoutes.files}
+                {/* <Link
+                    to={pageRoutes.searchRoutes.files}
                     className={styles.menu__btn}
                     onClick={() => {
                         hapticFeedback()
-                        handleSelect('files')
+                        handleSelect('search')
                     }}
                 >
-                    {/* <img
-                        src={files}
-                        className={styles.iconFiles}
-                        alt="files"
-                    ></img>{' '} */}
+                    <Search
+                        className={`${styles.icon} ${selected === 'search' ? styles.selected : ''}`}
+                        sx={{ fontSize: '3rem' }}
+                    ></Search>
                     <h4
-                        className={`${styles.title} ${selected === 'files' ? styles.selected : ''}`}
+                        className={`${styles.title} ${selected === 'search' ? styles.selected : ''}`}
                     >
                         Поиск
+                    </h4>
+                </Link> */}
+                <Link
+                    to={pageRoutes.categoriesRoutes.categories}
+                    className={styles.menu__btn}
+                    onClick={() => {
+                        hapticFeedback()
+                        handleSelect('category')
+                    }}
+                >
+                    <ViewHeadline
+                        sx={{ fontSize: '3rem' }}
+                        className={`${styles.icon} ${selected === 'category' ? styles.selected : ''}`}
+                    ></ViewHeadline>
+
+                    <h4
+                        className={`${styles.title} ${selected === 'category' ? styles.selected : ''}`}
+                    >
+                        Категории
+                    </h4>
+                </Link>
+                <Link
+                    to={pageRoutes.favoritesRoutes.favorites}
+                    className={styles.menu__btn}
+                    onClick={() => {
+                        hapticFeedback()
+                        handleSelect('favorite')
+                    }}
+                >
+                    <StarBorder
+                        className={`${styles.icon} ${selected === 'favorite' ? styles.selected : ''}`}
+                        sx={{ fontSize: '3rem' }}
+                    ></StarBorder>
+                    <h4
+                        className={`${styles.title} ${selected === 'favorite' ? styles.selected : ''}`}
+                    >
+                        Избранное
                     </h4>
                 </Link>
                 <Link
@@ -48,15 +90,14 @@ const Menu = () => {
                         handleSelect('profile')
                     }}
                 >
-                    {/* <img
-                        src={profile}
-                        className={styles.iconProfile}
-                        alt="profile"
-                    ></img>{' '} */}
+                    <AccountCircle
+                        className={`${styles.icon} ${selected === 'profile' ? styles.selected : ''}`}
+                        sx={{ fontSize: '3rem' }}
+                    ></AccountCircle>
                     <h4
                         className={`${styles.title} ${selected === 'profile' ? styles.selected : ''}`}
                     >
-                        Категории
+                        Профиль
                     </h4>
                 </Link>
             </div>

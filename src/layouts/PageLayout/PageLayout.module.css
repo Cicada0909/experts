@@ -1,5 +1,7 @@
 body {
-    background-color: #fffbfe;
+    background-color: var(--colors__background);
+    height: 100%;
+    overflow: hidden;
 }
 
 .wrapper {
@@ -12,10 +14,13 @@ body {
 }
 
 .content {
-    width: 78%;
+    width: 100%;
     margin: 0 auto;
+    padding: 0 5%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }

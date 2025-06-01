@@ -1,0 +1,37 @@
+.item {
+    display: flex;
+    align-items: center;
+    gap: 20%;
+    width: 100%;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    padding: 5% 10%;
+    border-radius: 15px;
+    border: 1px solid var(--colors__border);
+    background-color: var(--colors__inside);
+    color: var(--colors__largeText);
+    min-height: 12.6vh;
+    position: relative;
+    transition: 0.3s ease;
+    opacity: 1;
+}
+
+.removing {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.closeButton {
+    transition: transform 0.3s ease;
+}
+
+.closeButton:active {
+    transform: scale(0.9);
+}
+
+.avatar {
+    width: 25%;
+    border-radius: 50%;
+}
