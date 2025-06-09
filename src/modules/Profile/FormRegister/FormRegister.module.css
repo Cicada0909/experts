@@ -1,0 +1,37 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    padding-top: 12rem;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.inputItems {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 3rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+
+    border-radius: 15px;
+    border: 1px solid var(--colors__border);
+    background-color: var(--colors__inside);
+    color: var(--colors__largeText);
+}

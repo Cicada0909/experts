@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Profile.module.css'
 import { Button } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 
 const Profile = () => {
     const [user, setUser] = useState(null)
     const [isImageLoaded, setIsImageLoaded] = useState(false)
+    const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
 
     useEffect(() => {
         const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user
@@ -44,6 +47,8 @@ const Profile = () => {
             </div>
 
             <Button
+                component={Link}
+                to="/profile/register"
                 variant="contained"
                 size="large"
                 className={styles.button}

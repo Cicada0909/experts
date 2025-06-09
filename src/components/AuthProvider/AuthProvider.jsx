@@ -45,9 +45,6 @@ const useAuth = () => {
         setLogs((prev) => [...prev, msg])
     }
 
-    // const initData = window?.Telegram?.WebApp?.initData
-    const initData = ''
-
     useEffect(() => {
         const authorize = async () => {
             setLoading(true)

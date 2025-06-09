@@ -1,0 +1,74 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    padding-top: 15rem;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 1.5rem;
+    padding-bottom: 35%;
+}
+
+.calendar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 1.5rem;
+    color: var(--colors__largeText);
+    background-color: var(--colors__inside);
+    padding: 0 10%;
+    border: 1px solid var(--colors__border);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding-bottom: 5rem;
+    min-height: 55rem;
+}
+
+.datapickerwrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 1.5rem;
+}
+
+.datapickerwrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0rem;
+}
+
+.datePickerWrapper {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.slotsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 0rem;
+}
+
+.datePicker {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.datePicker:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}

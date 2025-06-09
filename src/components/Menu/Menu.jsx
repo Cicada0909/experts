@@ -5,14 +5,17 @@ import { pageRoutes } from '../../constants/pageRoutes'
 import {
     Abc,
     AccountCircle,
+    AdminPanelSettings,
     MenuBook,
     Search,
     StarBorder,
     ViewHeadline,
 } from '@mui/icons-material'
+import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 
 const Menu = () => {
     const [selected, setSelected] = useState('category')
+    const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
 
     const hapticFeedback = () => {
         if (window.Telegram?.WebApp?.HapticFeedback?.impactOccurred) {
@@ -27,24 +30,26 @@ const Menu = () => {
     return (
         <div className={styles.menu}>
             <div className={styles.wrapper}>
-                {/* <Link
-                    to={pageRoutes.searchRoutes.files}
-                    className={styles.menu__btn}
-                    onClick={() => {
-                        hapticFeedback()
-                        handleSelect('search')
-                    }}
-                >
-                    <Search
-                        className={`${styles.icon} ${selected === 'search' ? styles.selected : ''}`}
-                        sx={{ fontSize: '3rem' }}
-                    ></Search>
-                    <h4
-                        className={`${styles.title} ${selected === 'search' ? styles.selected : ''}`}
+                {role === 'admin' && (
+                    <Link
+                        to={pageRoutes.searchRoutes.search}
+                        className={styles.menu__btn}
+                        onClick={() => {
+                            hapticFeedback()
+                            handleSelect('search')
+                        }}
                     >
-                        Поиск
-                    </h4>
-                </Link> */}
+                        <AdminPanelSettings
+                            className={`${styles.icon} ${selected === 'search' ? styles.selected : ''}`}
+                            sx={{ fontSize: '3rem' }}
+                        ></AdminPanelSettings>
+                        <h4
+                            className={`${styles.title} ${selected === 'search' ? styles.selected : ''}`}
+                        >
+                            Админ панель
+                        </h4>
+                    </Link>
+                )}
                 <Link
                     to={pageRoutes.categoriesRoutes.categories}
                     className={styles.menu__btn}

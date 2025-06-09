@@ -1,6 +1,7 @@
 const search = "/search";
 
 const expert = "/expert/:id";
+const expertDate = "/expert/:id/:date";
 
 const expertRoutes = {
     expert: expert,
@@ -31,9 +32,13 @@ const favoritesRoutes = {
 };
 
 const profile = "/profile";
+const register = "/profile/register"
+const slots = "/profile/slots"
 
 const profileRoutes = {
     profile: profile,
+    register: register,
+    slots: slots,
 };
 
 export const pageRoutes = {
@@ -42,4 +47,6 @@ export const pageRoutes = {
     favoritesRoutes,
     profileRoutes,
     expertRoutes,
+    register,
+    expertDate,
 };

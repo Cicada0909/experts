@@ -8,6 +8,15 @@ import { getExpertsSearchByCategory } from '../../modules/Categories/api/getExpe
 import ExpertsList from '../../modules/Categories/components/ExpertsList/ExpertsList'
 import ExpertItem from '../../components/ExpertItem/ExpertItem'
 import ExpertsListSkeleton from '../../modules/Categories/components/ExpertsListSkeleton/ExpertsListSkeleton'
+import {
+    Checkbox,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+} from '@mui/material'
+import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 
 const Categories = () => {
     const { data, isLoading, isError } = useQuery({
@@ -15,6 +24,14 @@ const Categories = () => {
         queryFn: getCategories,
         staleTime: 1000 * 60 * 60,
     })
+
+    const sortedCategories = data
+        ? [...data].sort((a, b) => a.position - b.position)
+        : []
+
+    const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
+
+    console.log(role)
 
     const { subtitle, id } = useParams()
     const [search, setSearch] = useState('')
@@ -25,6 +42,8 @@ const Categories = () => {
         rating: '',
         isAFree: false,
     })
+
+    console.log(data)
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -49,6 +68,8 @@ const Categories = () => {
         enabled: !!debouncedSearch || !!filters.rating || !!filters.isAFree,
     })
 
+    console.log(dataExperts)
+
     const wrapperRef = useRef(null)
 
     useEffect(() => {
@@ -68,19 +89,53 @@ const Categories = () => {
     return (
         <div className={styles.wrapper} ref={wrapperRef}>
             <div className={styles.inputWrapper}>
-                <input
-                    className={styles.input}
-                    type="text"
-                    placeholder="Поиск по категориям"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.currentTarget.querySelector('input')?.blur()
+                    }}
+                >
+                    <TextField
+                        label="Поиск эксперта"
+                        variant="outlined"
+                        placeholder="Имя, фамилия, психолог, коуч..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className={styles.input}
+                        slotProps={{
+                            input: {
+                                sx: { fontSize: '1.5rem' },
+                            },
+                            inputLabel: {
+                                sx: { fontSize: '1.4rem' },
+                            },
+                        }}
+                    />
+                </form>
             </div>
 
             <div className={styles.filters}>
-                <label>
-                    Рейтинг:
-                    <select
+                <FormControl
+                    variant="standard"
+                    sx={{
+                        m: 1,
+                        minWidth: 120,
+                    }}
+                    className={styles.select}
+                >
+                    <InputLabel
+                        id="demo-simple-select-standard-label"
+                        sx={{
+                            fontSize: '1.2rem',
+
+                            fontFamily: "'Nunito', sans-serif",
+                        }}
+                    >
+                        Рейтинг
+                    </InputLabel>
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
                         value={filters.rating}
                         onChange={(e) =>
                             setFilters((prev) => ({
@@ -88,17 +143,24 @@ const Categories = () => {
                                 rating: e.target.value,
                             }))
                         }
+                        label="Age"
                     >
-                        <option value="">Любой</option>
-                        <option value="4.5">4.5★ и выше</option>
-                        <option value="4">4★ и выше</option>
-                        <option value="3">3★ и выше</option>
-                    </select>
-                </label>
+                        <MenuItem value="">Любой</MenuItem>
+                        <MenuItem value="4.5">4.5★ и выше</MenuItem>
+                        <MenuItem value="4">4★ и выше</MenuItem>
+                        <MenuItem value="3">3★ и выше</MenuItem>
+                    </Select>
+                </FormControl>
 
-                <label>
-                    <input
-                        type="checkbox"
+                <label
+                    style={{
+                        fontSize: '1.1rem',
+
+                        fontFamily: "'Nunito', sans-serif",
+                    }}
+                >
+                    <Checkbox
+                        size="large"
                         checked={filters.isAFree}
                         onChange={(e) =>
                             setFilters((prev) => ({
@@ -106,7 +168,7 @@ const Categories = () => {
                                 isAFree: e.target.checked,
                             }))
                         }
-                    />
+                    ></Checkbox>
                     Только бесплатные
                 </label>
             </div>
@@ -114,7 +176,7 @@ const Categories = () => {
             <div className={styles.items}>
                 {!search && !subtitle && !id && (
                     <>
-                        {data.map((item) => (
+                        {sortedCategories.map((item) => (
                             <Link
                                 key={item.id}
                                 to={item.subtitle}

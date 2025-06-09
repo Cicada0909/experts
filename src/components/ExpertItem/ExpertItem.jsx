@@ -3,6 +3,7 @@ import styles from './ExpertItem.module.css'
 import { Close } from '@mui/icons-material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { removeFavorite } from '../../modules/Favorites/api/favorites'
+import { Rating } from '@mui/material'
 
 const ExpertItem = ({ person, isFavorites = false }) => {
     const queryClient = useQueryClient()
@@ -28,6 +29,8 @@ const ExpertItem = ({ person, isFavorites = false }) => {
             queryClient.invalidateQueries(['favorites'])
         },
     })
+
+    console.log(person)
 
     const handleRemove = (id) => {
         mutation.mutate(id)
@@ -64,8 +67,14 @@ const ExpertItem = ({ person, isFavorites = false }) => {
                 <h3 className={styles.name}>
                     {person.first_name} {person.last_name}
                 </h3>
-                <p className={styles.role}>{person.role}</p>
+                <p className={styles.role}>{person.profession}</p>
             </div>
+            <Rating
+                value={person.rating}
+                readOnly
+                sx={{ mb: 1 }}
+                className={styles.rating}
+            />
         </Link>
     )
 }

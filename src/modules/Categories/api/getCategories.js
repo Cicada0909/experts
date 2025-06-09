@@ -5,6 +5,14 @@ export const getCategories = async () => {
     url: '/api/categories',
     method: 'GET',
   })
+  return response.data.categories
+}
+
+export const getRoll = async () => {
+  const response = await apiRequest({
+    url: '/api/categories',
+    method: 'GET',
+  })
   return response.data
 }
 

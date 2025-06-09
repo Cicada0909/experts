@@ -17,3 +17,21 @@ export const getExpertsSearchByCategory = async ({ queryKey }) => {
 
     return response.data
 }
+
+export const getExpertById = async (expertId) => {
+  const response = await apiRequest({
+    url: `/api/experts/${expertId}`,
+    method: 'GET',
+  })
+  return response.data
+}
+
+export const getSlotsExpertById = async (expertId) => {
+  const response = await apiRequest({
+    url: `/api/bookings/available/${expertId}`,
+    method: 'GET',
+  })
+  return response.data
+}
+
+

@@ -1,7 +1,7 @@
 .item {
     display: flex;
     align-items: center;
-    gap: 20%;
+    gap: 15%;
     width: 100%;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
     padding: 5% 10%;
@@ -13,6 +13,13 @@
     position: relative;
     transition: 0.3s ease;
     opacity: 1;
+    position: relative;
+}
+
+.rating {
+    position: absolute !important;
+    bottom: 2% !important;
+    right: 3%;
 }
 
 .removing {
@@ -32,6 +39,7 @@
 }
 
 .avatar {
-    width: 25%;
+    width: 7.3rem;
+    height: 7.3rem;
     border-radius: 50%;
 }

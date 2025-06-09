@@ -1,6 +1,7 @@
 .wrapper {
     width: 100%;
     height: 100%;
+    max-width: 800px;
 }
 
 .items {
@@ -8,7 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 30%;
+    /* padding-top: 30%; */
     padding-bottom: 30%;
     font-size: 1.2rem;
     gap: 1.5rem;
@@ -32,4 +33,19 @@
     height: 20%;
     border: 1px solid var(--colors__border);
     border-radius: 8px;
+}
+
+.inputWrapper {
+    padding-top: 10.5rem;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select {
+    margin: 0 !important;
+    margin-bottom: 2.2rem !important;
 }

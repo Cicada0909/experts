@@ -7,6 +7,8 @@ import Favorites from '../pages/Favorites/Favorites'
 import Profile from '../pages/Profile/Profile'
 import ExpertDetails from '../components/ExpertDetails/ExpertDetails'
 import ExpertsList from '../modules/Categories/components/ExpertsList/ExpertsList'
+import FormRegister from '../modules/Profile/FormRegister/FormRegister'
+import Calendar from '../modules/Categories/components/Calendar/Calendar'
 
 const router = createHashRouter([
     {
@@ -52,8 +54,16 @@ const router = createHashRouter([
                 element: <Profile />,
             },
             {
+                path: pageRoutes.profileRoutes.register,
+                element: <FormRegister />,
+            },
+            {
                 path: pageRoutes.expertRoutes.expert,
                 element: <ExpertDetails />,
+            },
+            {
+                path: pageRoutes.expertDate,
+                element: <Calendar />,
             },
         ],
     },
