@@ -49,3 +49,10 @@
     margin: 0 !important;
     margin-bottom: 2.2rem !important;
 }
+
+.modalbtn {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+}

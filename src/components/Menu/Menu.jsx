@@ -22,6 +22,7 @@ const Menu = () => {
             window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy')
         }
     }
+    console.log(role)
 
     const handleSelect = (item) => {
         setSelected(item)

@@ -10,14 +10,33 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 10%;
-    padding-bottom: 10%;
+    padding-bottom: 3rem;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
+    gap: 5rem;
+}
+
+.wrapperExpert {
+    width: 100%;
+    border: 1px solid var(--colors__border);
+    background-color: var(--colors__inside);
+    color: var(--colors__largeText);
+    border-radius: 15px;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10%;
+    padding-bottom: 3rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    gap: 5rem;
 }
 
 .button {
-    width: 80%;
-    height: 10%;
+    width: 30rem;
+    height: 5rem;
 }
 
 .header {
@@ -27,11 +46,43 @@
     width: 100%;
 }
 
+.headerExpert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0 1rem;
+}
+
+.wrapperButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.wrapperButtons .button {
+    background-color: #9cd4c9 !important;
+    width: 25rem;
+    height: 4rem;
+}
+
+.profesion {
+    font-size: 10px;
+}
+
+.wrapperName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .avatar {
     width: 8vh;
     height: 8vh;
     border-radius: 50%;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    margin-left: 0.4rem;
 }
 
 .avatarSkeleton {
@@ -44,7 +95,15 @@
 
 .name {
     font-size: 1.7rem;
-    margin-right: 10%;
+    margin-right: 2rem;
+}
+
+.nameExpert {
+    font-size: 1.7rem;
+}
+
+.profesion {
+    font-size: 12px;
 }
 
 .pulse {

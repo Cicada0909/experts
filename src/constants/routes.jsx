@@ -9,6 +9,9 @@ import ExpertDetails from '../components/ExpertDetails/ExpertDetails'
 import ExpertsList from '../modules/Categories/components/ExpertsList/ExpertsList'
 import FormRegister from '../modules/Profile/FormRegister/FormRegister'
 import Calendar from '../modules/Categories/components/Calendar/Calendar'
+import Slots from '../modules/Profile/Slots/Slots'
+import Services from '../modules/Profile/Services/Services'
+import Applications from '../modules/Profile/Applications/Applications'
 
 const router = createHashRouter([
     {
@@ -56,6 +59,18 @@ const router = createHashRouter([
             {
                 path: pageRoutes.profileRoutes.register,
                 element: <FormRegister />,
+            },
+            {
+                path: pageRoutes.profileRoutes.slots,
+                element: <Slots />,
+            },
+            {
+                path: pageRoutes.profileRoutes.services,
+                element: <Services />,
+            },
+            {
+                path: pageRoutes.profileRoutes.applications,
+                element: <Applications />,
             },
             {
                 path: pageRoutes.expertRoutes.expert,

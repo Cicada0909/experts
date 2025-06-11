@@ -9,12 +9,18 @@ import ExpertsList from '../../modules/Categories/components/ExpertsList/Experts
 import ExpertItem from '../../components/ExpertItem/ExpertItem'
 import ExpertsListSkeleton from '../../modules/Categories/components/ExpertsListSkeleton/ExpertsListSkeleton'
 import {
+    Avatar,
+    Box,
+    Button,
     Checkbox,
     FormControl,
     InputLabel,
     MenuItem,
+    Modal,
+    Rating,
     Select,
     TextField,
+    Typography,
 } from '@mui/material'
 import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 
@@ -24,6 +30,18 @@ const Categories = () => {
         queryFn: getCategories,
         staleTime: 1000 * 60 * 60,
     })
+
+    const [open, setOpen] = useState(false)
+    const [rating, setRating] = useState(0)
+    const [review, setReview] = useState('')
+
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
+    const handleSubmit = () => {
+        console.log({ rating, review })
+        handleClose()
+    }
 
     const sortedCategories = data
         ? [...data].sort((a, b) => a.position - b.position)
@@ -88,6 +106,64 @@ const Categories = () => {
 
     return (
         <div className={styles.wrapper} ref={wrapperRef}>
+            <div className={styles.modalbtn} onClick={handleOpen}></div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-title"
+            >
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '16px',
+                        }}
+                    >
+                        <Avatar sx={{ bgcolor: 'grey.400' }} />
+                        <Typography id="modal-title" variant="h6">
+                            expert_name
+                        </Typography>
+                    </Box>
+                    <Rating
+                        name="expert-rating"
+                        value={rating}
+                        onChange={(event, newValue) => setRating(newValue)}
+                        size="large"
+                    />
+                    <TextField
+                        multiline
+                        rows={4}
+                        label="Ваш отзыв"
+                        variant="outlined"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
+                        fullWidth
+                    />
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        disabled={!rating || !review.trim()}
+                    >
+                        Отправить
+                    </Button>
+                </Box>
+            </Modal>
             <div className={styles.inputWrapper}>
                 <form
                     onSubmit={(e) => {

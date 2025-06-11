@@ -34,11 +34,15 @@ const favoritesRoutes = {
 const profile = "/profile";
 const register = "/profile/register"
 const slots = "/profile/slots"
+const services = "/profile/service"
+const applications = "/profile/applications"
 
 const profileRoutes = {
     profile: profile,
     register: register,
     slots: slots,
+    services: services,
+    applications: applications,
 };
 
 export const pageRoutes = {

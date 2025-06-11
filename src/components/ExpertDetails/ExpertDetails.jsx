@@ -180,6 +180,7 @@ const ExpertDetails = () => {
                         fontSize: '1.4rem',
                         mt: 3,
                         mb: 2,
+                        maxWidth: '40rem',
                     }}
                 >
                     {mutation.isLoading
@@ -277,6 +278,7 @@ const ExpertDetails = () => {
                             </Typography>
                             <Typography
                                 variant="body1"
+                                component="span"
                                 sx={{
                                     fontFamily: 'Nunito, sans-serif',
                                     fontSize: '1.3rem',
@@ -284,6 +286,7 @@ const ExpertDetails = () => {
                             >
                                 <Typography
                                     variant="body1"
+                                    component="span"
                                     sx={{
                                         fontFamily: 'Nunito, sans-serif',
                                         fontSize: '1.3rem',
@@ -292,10 +295,14 @@ const ExpertDetails = () => {
                                 >
                                     {expert.biography}
                                 </Typography>
+                                <div style={{ visibility: 'hidden' }}>
+                                    proffesion
+                                </div>
                                 <strong>Профессия:</strong> {expert.profession}
                             </Typography>
                             <Typography
                                 variant="body1"
+                                component="span"
                                 sx={{
                                     fontFamily: 'Nunito, sans-serif',
                                     fontSize: '1.3rem',
@@ -305,6 +312,7 @@ const ExpertDetails = () => {
                             </Typography>
                             <Typography
                                 variant="body1"
+                                component="span"
                                 sx={{
                                     fontFamily: 'Nunito, sans-serif',
                                     fontSize: '1.3rem',
@@ -422,8 +430,26 @@ const ExpertDetails = () => {
                                             p: 2,
                                             border: '1px solid #e0e0e0',
                                             borderRadius: '8px',
+                                            position: 'relative',
                                         }}
                                     >
+                                        <Typography
+                                            variant="h5"
+                                            sx={{
+                                                fontFamily:
+                                                    'Nunito, sans-serif',
+                                                fontSize: '1.1rem',
+                                                fontWeight: '500',
+                                                position: 'absolute',
+                                                right: '0.7rem',
+                                                color: 'gray',
+                                                top: '0.5rem',
+                                            }}
+                                        >
+                                            {course.price === 0
+                                                ? 'Бесплатно'
+                                                : `${course.price} ₸`}
+                                        </Typography>
                                         <Typography
                                             variant="h5"
                                             sx={{
