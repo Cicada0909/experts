@@ -19,6 +19,7 @@ import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 import { pageRoutes } from '../../constants/pageRoutes'
 import { getExpert } from '../../modules/Profile/api/expertsApi'
 import { apiRequest } from '../../utils/api'
+import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const Profile = () => {
     const [user, setUser] = useState(null)
@@ -257,10 +258,11 @@ const Profile = () => {
                         fontSize: '1.4rem',
                         backgroundColor: 'var(--colors__green)',
                     }}
+                    onClick={() => hapticFeedback('medium')}
                 >
                     Курсы
                 </Button>
-                <Button
+                {/* <Button
                     component={Link}
                     to={pageRoutes.profileRoutes.slots}
                     variant="contained"
@@ -271,9 +273,10 @@ const Profile = () => {
                         fontSize: '1.4rem',
                         backgroundColor: 'var(--colors__green)',
                     }}
+                    onClick={() => hapticFeedback('medium')}
                 >
                     График
-                </Button>
+                </Button> */}
                 <Button
                     component={Link}
                     to={pageRoutes.profileRoutes.applications}
@@ -285,6 +288,7 @@ const Profile = () => {
                         fontSize: '1.4rem',
                         backgroundColor: 'var(--colors__green)',
                     }}
+                    onClick={() => hapticFeedback('medium')}
                 >
                     Заявки
                 </Button>
@@ -294,7 +298,10 @@ const Profile = () => {
                 variant="contained"
                 size="large"
                 className={styles.button}
-                onClick={handleOpenModal}
+                onClick={() => {
+                    hapticFeedback('medium')
+                    handleOpenModal()
+                }}
                 sx={{
                     fontFamily: "'Nunito', sans-serif",
                     fontSize: '1.4rem',
@@ -304,7 +311,13 @@ const Profile = () => {
                 Редактировать профиль
             </Button>
 
-            <Modal open={openModal} onClose={handleCloseModal}>
+            <Modal
+                open={openModal}
+                onClose={() => {
+                    hapticFeedback('medium')
+                    handleCloseModal()
+                }}
+            >
                 <Box
                     sx={{
                         position: 'absolute',
@@ -469,6 +482,7 @@ const Profile = () => {
                                 marginTop: '2rem',
                                 marginBottom: '2rem',
                             }}
+                            onClick={() => hapticFeedback('medium')}
                         >
                             <Avatar alt="Upload new avatar" src={avatarSrc} />
                             <input
@@ -503,7 +517,10 @@ const Profile = () => {
                         >
                             <Button
                                 variant="outlined"
-                                onClick={handleCloseModal}
+                                onClick={() => {
+                                    hapticFeedback('medium')
+                                    handleCloseModal()
+                                }}
                                 sx={{
                                     fontFamily: "'Nunito', sans-serif",
                                     fontSize: '1.4rem',
@@ -520,6 +537,7 @@ const Profile = () => {
                                     backgroundColor: 'var(--colors__green)',
                                 }}
                                 disabled={mutation.isLoading}
+                                onClick={() => hapticFeedback('medium')}
                             >
                                 {mutation.isLoading
                                     ? 'Отправка...'
@@ -560,7 +578,43 @@ const Profile = () => {
                 </h4>
             </div>
 
-            {!role === 'admin' && (
+            {role === 'user' && (
+                <>
+                    <div className={styles.wrapperButtons}>
+                        <Button
+                            component={Link}
+                            to={pageRoutes.profileRoutes.applications}
+                            variant="contained"
+                            size="large"
+                            className={styles.button}
+                            sx={{
+                                fontFamily: "'Nunito', sans-serif",
+                                fontSize: '1.4rem',
+                                backgroundColor: 'var(--colors__green)',
+                            }}
+                            onClick={() => hapticFeedback('medium')}
+                        >
+                            Записи
+                        </Button>
+                    </div>
+                    <Button
+                        component={Link}
+                        to={pageRoutes.profileRoutes.register}
+                        variant="contained"
+                        size="large"
+                        className={styles.button}
+                        sx={{
+                            fontFamily: "'Nunito', sans-serif",
+                            fontSize: '1.4rem',
+                            backgroundColor: 'var(--colors__green)',
+                        }}
+                        onClick={() => hapticFeedback('medium')}
+                    >
+                        Стать экспертом
+                    </Button>
+                </>
+            )}
+            {/* {role === 'admin' && (
                 <Button
                     component={Link}
                     to={pageRoutes.profileRoutes.register}
@@ -572,10 +626,11 @@ const Profile = () => {
                         fontSize: '1.4rem',
                         backgroundColor: 'var(--colors__green)',
                     }}
+                    onClick={() => hapticFeedback('medium')}
                 >
                     Стать экспертом
                 </Button>
-            )}
+            )} */}
 
             {role === 'admin' && (
                 <Button
@@ -589,6 +644,7 @@ const Profile = () => {
                         fontSize: '1.4rem',
                         backgroundColor: 'var(--colors__green)',
                     }}
+                    onClick={() => hapticFeedback('medium')}
                 >
                     Записи
                 </Button>

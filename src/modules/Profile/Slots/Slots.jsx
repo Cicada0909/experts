@@ -240,7 +240,7 @@ const Services = () => {
                             flexDirection: 'column',
                             minHeight: '100%',
                             justifyContent: 'space-between',
-                            pt: 6,
+                            pt: 2,
                         }}
                     >
                         <Box>

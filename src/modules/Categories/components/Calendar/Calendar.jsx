@@ -286,7 +286,7 @@ const Calendar = () => {
             if (!response.ok) {
                 throw new Error('Ошибка при бронировании')
             }
-            alert('Бронирование успешно:', response.data)
+            alert('Бронирование прошло успешно')
             console.log('Бронирование успешно:', response.data)
             console.log('Отправленные данные:', bookingData)
         } catch (error) {

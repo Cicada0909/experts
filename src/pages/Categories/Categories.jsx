@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { getCategories } from '../../modules/Categories/api/getCategories'
+import {
+    getCategories,
+    getReviews,
+} from '../../modules/Categories/api/getCategories'
 import styles from './Categories.module.css'
 import { Link, Outlet, useParams } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
@@ -23,6 +26,8 @@ import {
     Typography,
 } from '@mui/material'
 import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
+import { apiRequest } from '../../utils/api'
+import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const Categories = () => {
     const { data, isLoading, isError } = useQuery({
@@ -31,25 +36,81 @@ const Categories = () => {
         staleTime: 1000 * 60 * 60,
     })
 
+    const {
+        data: reviewData,
+        isLoading: reviewLoading,
+        isError: reviewError,
+        refetch: refetchReviews,
+    } = useQuery({
+        queryKey: ['reviews'],
+        queryFn: getReviews,
+    })
+
+    console.log(reviewData)
+
     const [open, setOpen] = useState(false)
     const [rating, setRating] = useState(0)
-    const [review, setReview] = useState('')
+    const [comment, setComment] = useState('')
+    const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
 
-    const handleSubmit = () => {
-        console.log({ rating, review })
-        handleClose()
+    const pendingReviews = reviewData?.pending_reviews || []
+    const currentReview = pendingReviews[currentReviewIndex]
+
+    useEffect(() => {
+        if (pendingReviews.length > 0 && !reviewLoading && !reviewError) {
+            setOpen(true)
+        }
+    }, [pendingReviews, reviewLoading, reviewError])
+
+    const handleSubmit = async () => {
+        if (!rating) return
+
+        try {
+            const payload = {
+                rating,
+                comment: comment.trim() || undefined,
+            }
+
+            const endpoint =
+                role === 'expert'
+                    ? `/api/users/${currentReview.user_id}`
+                    : `/api/experts/${currentReview.user_id}`
+
+            await apiRequest({
+                url: endpoint,
+                method: 'POST',
+                data: payload,
+            })
+
+            setRating(0)
+            setComment('')
+
+            if (currentReviewIndex < pendingReviews.length - 1) {
+                setCurrentReviewIndex((prev) => prev + 1)
+            } else {
+                setOpen(false)
+                setCurrentReviewIndex(0)
+                await refetchReviews()
+            }
+        } catch (error) {
+            console.error('Error submitting review:', error)
+        }
+    }
+
+    const handleClose = () => {
+        if (currentReviewIndex >= pendingReviews.length - 1) {
+            setOpen(false)
+            setCurrentReviewIndex(0)
+            setRating(0)
+            setComment('')
+        }
     }
 
     const sortedCategories = data
         ? [...data].sort((a, b) => a.position - b.position)
         : []
-
-    const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
-
-    console.log(role)
 
     const { subtitle, id } = useParams()
     const [search, setSearch] = useState('')
@@ -60,8 +121,6 @@ const Categories = () => {
         rating: '',
         isAFree: false,
     })
-
-    console.log(data)
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -86,8 +145,6 @@ const Categories = () => {
         enabled: !!debouncedSearch || !!filters.rating || !!filters.isAFree,
     })
 
-    console.log(dataExperts)
-
     const wrapperRef = useRef(null)
 
     useEffect(() => {
@@ -106,10 +163,12 @@ const Categories = () => {
 
     return (
         <div className={styles.wrapper} ref={wrapperRef}>
-            <div className={styles.modalbtn} onClick={handleOpen}></div>
             <Modal
                 open={open}
-                onClose={handleClose}
+                onClose={() => {
+                    hapticFeedback('medium')
+                    handleClose()
+                }}
                 aria-labelledby="modal-title"
             >
                 <Box
@@ -128,6 +187,9 @@ const Categories = () => {
                         gap: 2,
                     }}
                 >
+                    <Typography id="modal-title" variant="h5">
+                        Оставьте пожалуйста вашу оценку и отзыв
+                    </Typography>
                     <Box
                         sx={{
                             display: 'flex',
@@ -136,29 +198,44 @@ const Categories = () => {
                         }}
                     >
                         <Avatar sx={{ bgcolor: 'grey.400' }} />
-                        <Typography id="modal-title" variant="h6">
-                            expert_name
+                        <Typography variant="subtitle1">
+                            {currentReview?.first_name}{' '}
+                            {currentReview?.last_name || ''}
                         </Typography>
                     </Box>
                     <Rating
                         name="expert-rating"
                         value={rating}
-                        onChange={(event, newValue) => setRating(newValue)}
+                        onChange={(event, newValue) => {
+                            hapticFeedback('medium')
+                            setRating(newValue)
+                        }}
                         size="large"
                     />
                     <TextField
                         multiline
                         rows={4}
-                        label="Ваш отзыв"
+                        label="Ваш отзыв (до 200 символов)"
                         variant="outlined"
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
+                        value={comment}
+                        onChange={(e) => {
+                            if (e.target.value.length <= 200) {
+                                setComment(e.target.value)
+                            }
+                        }}
                         fullWidth
+                        inputProps={{ maxLength: 200 }}
                     />
+                    <Typography variant="caption" color="text.secondary">
+                        {comment.length}/200 символов
+                    </Typography>
                     <Button
                         variant="contained"
-                        onClick={handleSubmit}
-                        disabled={!rating || !review.trim()}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleSubmit()
+                        }}
+                        disabled={!rating}
                     >
                         Отправить
                     </Button>
@@ -203,7 +280,6 @@ const Categories = () => {
                         id="demo-simple-select-standard-label"
                         sx={{
                             fontSize: '1.2rem',
-
                             fontFamily: "'Nunito', sans-serif",
                         }}
                     >
@@ -213,38 +289,59 @@ const Categories = () => {
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         value={filters.rating}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            hapticFeedback('medium')
                             setFilters((prev) => ({
                                 ...prev,
                                 rating: e.target.value,
                             }))
-                        }
+                        }}
                         label="Age"
                     >
-                        <MenuItem value="">Любой</MenuItem>
-                        <MenuItem value="4.5">4.5★ и выше</MenuItem>
-                        <MenuItem value="4">4★ и выше</MenuItem>
-                        <MenuItem value="3">3★ и выше</MenuItem>
+                        <MenuItem
+                            value=""
+                            onClick={() => hapticFeedback('medium')}
+                        >
+                            Любой
+                        </MenuItem>
+                        <MenuItem
+                            value="4.5"
+                            onClick={() => hapticFeedback('medium')}
+                        >
+                            4.5★ и выше
+                        </MenuItem>
+                        <MenuItem
+                            value="4"
+                            onClick={() => hapticFeedback('medium')}
+                        >
+                            4★ и выше
+                        </MenuItem>
+                        <MenuItem
+                            value="3"
+                            onClick={() => hapticFeedback('medium')}
+                        >
+                            3★ и выше
+                        </MenuItem>
                     </Select>
                 </FormControl>
 
                 <label
                     style={{
                         fontSize: '1.1rem',
-
                         fontFamily: "'Nunito', sans-serif",
                     }}
                 >
                     <Checkbox
                         size="large"
                         checked={filters.isAFree}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            hapticFeedback('medium')
                             setFilters((prev) => ({
                                 ...prev,
                                 isAFree: e.target.checked,
                             }))
-                        }
-                    ></Checkbox>
+                        }}
+                    />
                     Только бесплатные
                 </label>
             </div>
@@ -257,6 +354,7 @@ const Categories = () => {
                                 key={item.id}
                                 to={item.subtitle}
                                 className={`${styles.item} clickable`}
+                                onClick={() => hapticFeedback('medium')}
                             >
                                 <h3>{item.title}</h3>
                             </Link>

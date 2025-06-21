@@ -72,3 +72,23 @@ export const downloadStatiscs = async () => {
   return response.data
 }
 
+
+export const downloadApplications = async () => {
+  const response = await apiRequest({
+    url: '/api/rejected-bookings',
+    method: 'GET',
+    responseType: 'blob', 
+  })
+
+
+  const url = window.URL.createObjectURL(new Blob([response.data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', 'users.xlsx') 
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  window.URL.revokeObjectURL(url)
+
+  return response.data
+}

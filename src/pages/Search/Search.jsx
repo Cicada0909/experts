@@ -1,5 +1,6 @@
 import styles from './Search.module.css'
 import {
+    downloadApplications,
     downloadExpertsExcel,
     downloadStatiscs,
     downloadUsers,
@@ -128,6 +129,15 @@ const Search = () => {
     const handleDownloadStatiscs = async () => {
         try {
             await downloadStatiscs()
+            console.log('Файл успешно скачан')
+        } catch (error) {
+            console.error('Ошибка при скачивании файла:', error)
+        }
+    }
+
+    const HandleDownloadApplications = async () => {
+        try {
+            await downloadApplications()
             console.log('Файл успешно скачан')
         } catch (error) {
             console.error('Ошибка при скачивании файла:', error)
@@ -279,6 +289,13 @@ const Search = () => {
                         className={styles.btns}
                     >
                         Статистика
+                    </Button>
+                    <Button
+                        onClick={HandleDownloadApplications}
+                        variant="contained"
+                        className={styles.btns}
+                    >
+                        Отмененные заявки
                     </Button>
                 </Box>
             )}

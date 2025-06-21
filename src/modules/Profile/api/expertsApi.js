@@ -1,7 +1,5 @@
 import { apiRequest } from "../../../utils/api";
 
-
-
 export const getAvailableSlots = async () => {
   try {
     const response = await apiRequest({

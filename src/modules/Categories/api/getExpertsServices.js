@@ -23,3 +23,12 @@ export const addSlot = async (expertId, slot) => {
   console.log('Ответ от API addSlot:', response.data);
   return response.data;
 };
+
+
+export const createServiceBooking = async (serviceId) => {
+  const response = await apiRequest({
+    url: `/api/services/${serviceId}/bookings`,
+    method: 'POST',
+  })
+  return response.data
+}

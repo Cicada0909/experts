@@ -4,7 +4,10 @@ import {
     getExpertById,
     getSlotsExpertById,
 } from '../../modules/Categories/api/getExperts'
-import { getExpertServicesById } from '../../modules/Categories/api/getExpertsServices'
+import {
+    createServiceBooking,
+    getExpertServicesById,
+} from '../../modules/Categories/api/getExpertsServices'
 import { useState } from 'react'
 import {
     Box,
@@ -48,9 +51,10 @@ const ExpertDetails = () => {
         queryFn: () => getExpertServicesById(id),
     })
 
+    console.log(expertServices)
+
     const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
 
-    // Centered loading indicator
     if (isLoading || isLoadingExpertServices) {
         return (
             <Box
@@ -322,7 +326,6 @@ const ExpertDetails = () => {
                             </Typography>
                         </Box>
                     )}
-
                     {activeTab === 1 && (
                         <Box>
                             <Typography
@@ -422,97 +425,154 @@ const ExpertDetails = () => {
                                 Курсы эксперта
                             </Typography>
                             {courses.length > 0 ? (
-                                courses.map((course) => (
-                                    <Box
-                                        key={course.id}
-                                        sx={{
-                                            mb: 3,
-                                            p: 2,
-                                            border: '1px solid #e0e0e0',
-                                            borderRadius: '8px',
-                                            position: 'relative',
-                                        }}
-                                    >
-                                        <Typography
-                                            variant="h5"
-                                            sx={{
-                                                fontFamily:
-                                                    'Nunito, sans-serif',
-                                                fontSize: '1.1rem',
-                                                fontWeight: '500',
-                                                position: 'absolute',
-                                                right: '0.7rem',
-                                                color: 'gray',
-                                                top: '0.5rem',
-                                            }}
-                                        >
-                                            {course.price === 0
-                                                ? 'Бесплатно'
-                                                : `${course.price} ₸`}
-                                        </Typography>
-                                        <Typography
-                                            variant="h5"
-                                            sx={{
-                                                fontFamily:
-                                                    'Nunito, sans-serif',
-                                                fontSize: '1.6rem',
-                                                fontWeight: '500',
-                                            }}
-                                        >
-                                            {course.title}
-                                        </Typography>
+                                courses.map((course) => {
+                                    const isTelegramAvailable =
+                                        course.expert_username &&
+                                        course.expert_username !== ''
+                                    const isPhoneValid =
+                                        course.expert_phone &&
+                                        course.expert_phone.match(
+                                            /^\+?\d{10,15}$/
+                                        )
+                                    const isButtonDisabled =
+                                        !isTelegramAvailable && !isPhoneValid
 
-                                        {expandedCourseIds.includes(
-                                            course.id
-                                        ) && (
+                                    const getLink = async () => {
+                                        try {
+                                            await createServiceBooking(
+                                                course.id
+                                            )
+                                            const message = encodeURIComponent(
+                                                `Здравствуйте! Хочу записаться на курс "${course.title}")`
+                                            )
+                                            if (isTelegramAvailable) {
+                                                return `https://t.me/${course.expert_username.replace(/^@/, '')}?text=${message}`
+                                            }
+                                            if (isPhoneValid) {
+                                                return `https://wa.me/${course.expert_phone.replace(/[\s()-]/g, '')}?text=${message}`
+                                            }
+                                            return '#'
+                                        } catch (error) {
+                                            console.error(
+                                                'Ошибка при создании бронирования:',
+                                                error
+                                            )
+                                            return '#'
+                                        }
+                                    }
+
+                                    const handleBookingClick = async (e) => {
+                                        e.preventDefault()
+                                        const link = await getLink()
+                                        if (link !== '#') {
+                                            window.open(
+                                                link,
+                                                '_blank',
+                                                'noopener,noreferrer'
+                                            )
+                                        } else {
+                                            alert(
+                                                'Не удалось создать бронирование или контакты недоступны'
+                                            )
+                                        }
+                                    }
+
+                                    return (
+                                        <Box
+                                            key={course.id}
+                                            sx={{
+                                                mb: 3,
+                                                p: 2,
+                                                border: '1px solid #e0e0e0',
+                                                borderRadius: '8px',
+                                                position: 'relative',
+                                            }}
+                                        >
                                             <Typography
-                                                variant="body1"
+                                                variant="h5"
                                                 sx={{
                                                     fontFamily:
                                                         'Nunito, sans-serif',
-                                                    mb: 1,
-                                                    fontSize: '1.3rem',
-                                                    marginTop: '1rem',
+                                                    fontSize: '1.1rem',
+                                                    fontWeight: '500',
+                                                    position: 'absolute',
+                                                    right: '0.7rem',
+                                                    color: 'gray',
+                                                    top: '0.5rem',
                                                 }}
                                             >
-                                                {course.description}
+                                                {course.price === 0
+                                                    ? 'Бесплатно'
+                                                    : `${course.price} ₸`}
                                             </Typography>
-                                        )}
+                                            <Typography
+                                                variant="h5"
+                                                sx={{
+                                                    fontFamily:
+                                                        'Nunito, sans-serif',
+                                                    fontSize: '1.6rem',
+                                                    fontWeight: '500',
+                                                }}
+                                            >
+                                                {course.title}
+                                            </Typography>
 
-                                        <Link to={`/expert/${id}/${course.id}`}>
+                                            {expandedCourseIds.includes(
+                                                course.id
+                                            ) && (
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{
+                                                        fontFamily:
+                                                            'Nunito, sans-serif',
+                                                        mb: 1,
+                                                        fontSize: '1.3rem',
+                                                        marginTop: '1rem',
+                                                    }}
+                                                >
+                                                    {course.description}
+                                                </Typography>
+                                            )}
+
                                             <Button
                                                 variant="contained"
+                                                disabled={isButtonDisabled}
+                                                onClick={handleBookingClick}
                                                 sx={{
                                                     fontFamily:
                                                         'Nunito, sans-serif',
                                                     fontSize: '1.3rem',
                                                     marginTop: '1rem',
+                                                    backgroundColor:
+                                                        isTelegramAvailable
+                                                            ? '#0088cc'
+                                                            : '#25D366', // Telegram blue, WhatsApp green
                                                 }}
                                             >
                                                 Записаться
                                             </Button>
-                                        </Link>
-                                        <Button
-                                            variant="outlined"
-                                            onClick={() =>
-                                                toggleExpanded(course.id)
-                                            } // Pass the course ID
-                                            sx={{
-                                                fontFamily:
-                                                    'Nunito, sans-serif',
-                                                fontSize: '1.3rem',
-                                                marginLeft: '1rem',
-                                                marginTop: '1rem',
-                                            }}
-                                        >
-                                            {expandedCourseIds.includes(
-                                                course.id
-                                            )
-                                                ? 'Скрыть'
-                                                : 'Подробнее'}
-                                        </Button>
-                                    </Box>
-                                ))
+                                            <Button
+                                                variant="outlined"
+                                                onClick={() =>
+                                                    toggleExpanded(course.id)
+                                                }
+                                                sx={{
+                                                    fontFamily:
+                                                        'Nunito, sans-serif',
+                                                    fontSize: '1.3rem',
+                                                    marginLeft: '1rem',
+                                                    marginTop: '1rem',
+                                                }}
+                                            >
+                                                {expandedCourseIds.includes(
+                                                    course.id
+                                                )
+                                                    ? 'Скрыть'
+                                                    : 'Подробнее'}
+                                            </Button>
+                                        </Box>
+                                    )
+                                })
                             ) : (
                                 <Typography
                                     variant="body1"

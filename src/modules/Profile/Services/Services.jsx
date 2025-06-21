@@ -28,6 +28,8 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import styles from './Services.module.css'
+import { useNavigate } from 'react-router-dom'
+import { ArrowBack } from '@mui/icons-material'
 
 const Services = () => {
     const [services, setServices] = useState([])
@@ -46,6 +48,8 @@ const Services = () => {
         category_id: 1,
     })
     const [formErrors, setFormErrors] = useState({})
+
+    const navigate = useNavigate()
 
     const fetchServices = async () => {
         try {
@@ -159,8 +163,24 @@ const Services = () => {
         setExpandedServiceId(expandedServiceId === serviceId ? null : serviceId)
     }
 
+    const handleGoBack = () => {
+        navigate(-1)
+    }
+
     return (
         <Container className={styles.wrapper} sx={{ pb: '80px' }}>
+            <IconButton
+                aria-label="back"
+                size="large"
+                sx={{
+                    color: 'primary.main',
+                    alignSelf: 'flex-start',
+                    marginBottom: '1rem',
+                }}
+                onClick={() => handleGoBack()}
+            >
+                <ArrowBack fontSize="large" />
+            </IconButton>
             <Box
                 sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}
             >
