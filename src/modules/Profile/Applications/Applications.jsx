@@ -28,6 +28,7 @@ import styles from './Applications.module.css'
 import { useNavigate } from 'react-router-dom'
 import { ArrowBack, Close } from '@mui/icons-material'
 import { getUserById } from '../api/userApi'
+import { hapticFeedback } from '../../../utils/hapticFeedBack/hapticFeedBack'
 
 const Applications = () => {
     const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
@@ -40,6 +41,8 @@ const Applications = () => {
     const [reviewsLoading, setReviewsLoading] = useState(false)
     const [reviewsError, setReviewsError] = useState(null)
     const navigate = useNavigate()
+
+    console.log(bookings)
 
     const fetchBookings = async (tab) => {
         setLoading(true)
@@ -80,7 +83,7 @@ const Applications = () => {
 
             normalizedBookings.sort((a, b) => {
                 const dateA = new Date(`${a.date}T${a.time}`)
-                const dateB = new Date(`${b.date}T${b.time}`)
+                const dateB = new Date(`${b.date}T${a.time}`)
                 return tab === 'future' ? dateA - dateB : dateB - dateA
             })
 
@@ -156,7 +159,10 @@ const Applications = () => {
                         alignSelf: 'flex-start',
                         marginBottom: '1rem',
                     }}
-                    onClick={handleGoBack}
+                    onClick={() => {
+                        hapticFeedback('medium')
+                        handleGoBack()
+                    }}
                 >
                     <ArrowBack fontSize="large" />
                 </IconButton>
@@ -166,7 +172,10 @@ const Applications = () => {
                         variant={
                             activeTab === 'future' ? 'contained' : 'outlined'
                         }
-                        onClick={() => handleTabSwitch('future')}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleTabSwitch('future')
+                        }}
                         sx={{ mr: 1 }}
                     >
                         Предстоящие записи
@@ -175,7 +184,10 @@ const Applications = () => {
                         variant={
                             activeTab === 'completed' ? 'contained' : 'outlined'
                         }
-                        onClick={() => handleTabSwitch('completed')}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleTabSwitch('completed')
+                        }}
                     >
                         История
                     </Button>
@@ -298,11 +310,12 @@ const Applications = () => {
                                             activeTab === 'future' && (
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() =>
+                                                    onClick={() => {
+                                                        hapticFeedback('medium')
                                                         handleOpenReviewsModal(
                                                             booking.user_id
                                                         )
-                                                    }
+                                                    }}
                                                 >
                                                     Отзывы
                                                 </Button>
@@ -317,7 +330,10 @@ const Applications = () => {
 
             <Dialog
                 open={openReviewsModal}
-                onClose={handleCloseReviewsModal}
+                onClose={() => {
+                    hapticFeedback('medium')
+                    handleCloseReviewsModal()
+                }}
                 maxWidth="sm"
                 fullWidth
                 PaperProps={{
@@ -332,7 +348,12 @@ const Applications = () => {
                     }}
                 >
                     Отзывы
-                    <IconButton onClick={handleCloseReviewsModal}>
+                    <IconButton
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleCloseReviewsModal()
+                        }}
+                    >
                         <Close />
                     </IconButton>
                 </DialogTitle>

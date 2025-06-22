@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getFavorites } from '../../modules/Favorites/api/favorites'
 import ExpertsListSkeleton from '../../modules/Categories/components/ExpertsListSkeleton/ExpertsListSkeleton'
 import NotFoundPage from '../../modules/Favorites/api/components/notFoundPage'
+import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const Favorites = () => {
     const { data, isLoading, isError } = useQuery({

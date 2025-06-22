@@ -46,8 +46,6 @@ const Categories = () => {
         queryFn: getReviews,
     })
 
-    console.log(reviewData)
-
     const [open, setOpen] = useState(false)
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
@@ -59,13 +57,24 @@ const Categories = () => {
     const currentReview = pendingReviews[currentReviewIndex]
 
     useEffect(() => {
-        if (pendingReviews.length > 0 && !reviewLoading && !reviewError) {
+        if (
+            pendingReviews.length > 0 &&
+            !reviewLoading &&
+            !reviewError &&
+            currentReview &&
+            (currentReview.user_id || currentReview.expert_id)
+        ) {
             setOpen(true)
+        } else {
+            setOpen(false)
         }
-    }, [pendingReviews, reviewLoading, reviewError])
+    }, [pendingReviews, reviewLoading, reviewError, currentReview])
 
     const handleSubmit = async () => {
-        if (!rating) return
+        if (!rating) {
+            console.error('Рейтинг не указан')
+            return
+        }
 
         try {
             const payload = {
@@ -73,10 +82,23 @@ const Categories = () => {
                 comment: comment.trim() || undefined,
             }
 
-            const endpoint =
-                role === 'expert'
-                    ? `/api/users/${currentReview.user_id}`
-                    : `/api/experts/${currentReview.user_id}`
+            let endpoint
+            let id
+
+            // Выбор ID и эндпоинта на основе данных в currentReview
+            if (currentReview.user_id) {
+                id = currentReview.user_id
+                endpoint = `/api/users/${id}`
+            } else if (currentReview.expert_id) {
+                id = currentReview.expert_id
+                endpoint = `/api/experts/${id}`
+            } else {
+                console.error(
+                    'Идентификатор не найден в currentReview:',
+                    currentReview
+                )
+                return
+            }
 
             await apiRequest({
                 url: endpoint,
@@ -95,7 +117,7 @@ const Categories = () => {
                 await refetchReviews()
             }
         } catch (error) {
-            console.error('Error submitting review:', error)
+            console.error('Ошибка отправки отзыва:', error)
         }
     }
 
