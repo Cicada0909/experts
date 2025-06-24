@@ -10,8 +10,14 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000
   },
-  build: {
-    minify: false,
-    sourcemap: false,
-  },
+    viteFinal: (config) => {
+        return {
+            ...config,
+            build: {
+                ...config.build,
+                sourcemap: false,
+                target: ['es2020'],
+            },
+        }
+    },
 })
