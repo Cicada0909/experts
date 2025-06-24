@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../Favorites/Favorites.module.css'
-import { Link } from 'react-router-dom'
 import ExpertItem from '../../components/ExpertItem/ExpertItem'
 import { useQuery } from '@tanstack/react-query'
 import { getFavorites } from '../../modules/Favorites/api/favorites'
 import ExpertsListSkeleton from '../../modules/Categories/components/ExpertsListSkeleton/ExpertsListSkeleton'
-import NotFoundPage from '../../modules/Favorites/api/components/notFoundPage'
-import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
+import NotFoundPage from '../../modules/Favorites/api/components/NotFoundPage.jsx'
 
 const Favorites = () => {
     const { data, isLoading, isError } = useQuery({
