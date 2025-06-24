@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build the Docker image
-        run: docker build . -t cicada98/experts:latest
+        run: docker build .Dockerfile -t cicada98/experts:latest
       - name: Push the Docker image
         run: |
           docker push cicada98/experts:latest
