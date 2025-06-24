@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../assets/image/logo.png'
-import styles from './loading.module.css'
+import styles from './Loading.module.css'
 
 const Loading = () => {
     return (
