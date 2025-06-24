@@ -15,4 +15,5 @@ jobs:
         run: docker build . --file Dockerfile -t cicada98/experts:latest
       - name: Push the Docker image
         run: |
+          docker login -u cicada98 -p ${{secrets.DOCKER_HUB_LOGIN}}
           docker push cicada98/experts:latest
