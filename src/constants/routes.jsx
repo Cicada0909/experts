@@ -1,6 +1,6 @@
 import { createHashRouter, redirect } from 'react-router-dom'
 import { pageRoutes } from './pageRoutes'
-import PageLayout from '../layouts/PageLayout/PageLayout'
+import PageLayout from '../layouts/PageLayout/PageLayout.jsx'
 import Search from '../pages/Search/Search'
 import Categories from '../pages/Categories/Categories'
 import Favorites from '../pages/Favorites/Favorites'

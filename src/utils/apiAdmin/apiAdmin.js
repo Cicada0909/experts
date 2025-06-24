@@ -1,4 +1,4 @@
-import { apiRequest, apiRequestWithBlob } from "../api";
+import { apiRequest, apiRequestWithBlob } from "../api.js";
 
 
 export const deleteExpert = async (expertId) => {
@@ -22,7 +22,7 @@ export const downloadExpertsExcel = async () => {
   const url = window.URL.createObjectURL(new Blob([response.data]))
   const link = document.createElement('a')
   link.href = url
-  link.setAttribute('download', 'users.xlsx') 
+  link.setAttribute('download', 'users.xlsx')
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
@@ -35,14 +35,14 @@ export const downloadUsers = async () => {
   const response = await apiRequest({
     url: '/api/users-to-excel',
     method: 'GET',
-    responseType: 'blob', 
+    responseType: 'blob',
   })
 
 
   const url = window.URL.createObjectURL(new Blob([response.data]))
   const link = document.createElement('a')
   link.href = url
-  link.setAttribute('download', 'users.xlsx') 
+  link.setAttribute('download', 'users.xlsx')
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
@@ -56,14 +56,14 @@ export const downloadStatiscs = async () => {
   const response = await apiRequest({
     url: '/api/statistics',
     method: 'GET',
-    responseType: 'blob', 
+    responseType: 'blob',
   })
 
 
   const url = window.URL.createObjectURL(new Blob([response.data]))
   const link = document.createElement('a')
   link.href = url
-  link.setAttribute('download', 'users.xlsx') 
+  link.setAttribute('download', 'users.xlsx')
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
@@ -77,14 +77,14 @@ export const downloadApplications = async () => {
   const response = await apiRequest({
     url: '/api/rejected-bookings',
     method: 'GET',
-    responseType: 'blob', 
+    responseType: 'blob',
   })
 
 
   const url = window.URL.createObjectURL(new Blob([response.data]))
   const link = document.createElement('a')
   link.href = url
-  link.setAttribute('download', 'users.xlsx') 
+  link.setAttribute('download', 'users.xlsx')
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)

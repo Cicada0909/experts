@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 import styles from './FormRegister.module.css'
-import { apiRequest } from '../../../utils/api'
+import { apiRequest } from '../../../utils/api.js'
 
 const FormRegister = () => {
     const [formData, setFormData] = useState({

@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "NODE_OPTIONS=\"--max-old-space-size=4096\" vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "dev": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --config webpack.config.cjs",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
@@ -29,13 +30,19 @@
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.6.0",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "file-loader": "^6.2.0",
     "gh-pages": "6.3.0",
     "globals": "^15.15.0",
+    "html-webpack-plugin": "^5.6.3",
     "prettier": "3.5.3",
-    "vite": "^7.0.0"
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

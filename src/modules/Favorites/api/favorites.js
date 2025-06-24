@@ -1,4 +1,4 @@
-import { apiRequest } from '../../../utils/api'
+import { apiRequest } from '../../../utils/api.js'
 
 export const getFavorites = async () => {
   const response = await apiRequest({

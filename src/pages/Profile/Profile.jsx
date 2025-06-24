@@ -18,7 +18,7 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 import { pageRoutes } from '../../constants/pageRoutes'
 import { getExpert } from '../../modules/Profile/api/expertsApi'
-import { apiRequest } from '../../utils/api'
+import { apiRequest } from '../../utils/api.js'
 import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const Profile = () => {

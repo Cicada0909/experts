@@ -1,4 +1,4 @@
-import { apiRequest } from "../../../utils/api"
+import { apiRequest } from "../../../utils/api.js"
 
 export const getExpertsSearchByCategory = async ({ queryKey }) => {
     const [_key, subtitle, search, filters] = queryKey

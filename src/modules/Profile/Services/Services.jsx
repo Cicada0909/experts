@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { apiRequest } from '../../../utils/api'
+import { apiRequest } from '../../../utils/api.js'
 import {
     getMyServices,
     deleteServices,

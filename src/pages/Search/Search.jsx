@@ -4,7 +4,7 @@ import {
     downloadExpertsExcel,
     downloadStatiscs,
     downloadUsers,
-} from '../../utils/apiAdmin/apiAdmin'
+} from '../../utils/apiAdmin/apiAdmin.js'
 import {
     Box,
     Button,
@@ -23,9 +23,8 @@ import {
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getCategories } from '../../modules/Categories/api/getCategories'
 import { useState, useEffect } from 'react'
-import { apiRequest } from '../../utils/api'
+import { apiRequest } from '../../utils/api.js'
 import CloseIcon from '@mui/icons-material/Close'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 
 // Hardcoded password
