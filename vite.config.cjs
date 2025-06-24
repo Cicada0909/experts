@@ -7,9 +7,8 @@ export default defineConfig({
   plugins: [react()],
   base: "/experts",
   server: {
-    https: process.env.NODE_ENV === 'development' ? {
-      key: fs.readFileSync('./ssl/key.pem'),
-      cert: fs.readFileSync('./ssl/cert.pem'),
-    } : undefined,
-  },
+    host: '0.0.0.0',
+    port: 3000
+  }
+
 })
