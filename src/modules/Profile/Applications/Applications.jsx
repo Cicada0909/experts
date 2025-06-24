@@ -28,6 +28,7 @@ import styles from './Applications.module.css'
 import { useNavigate } from 'react-router-dom'
 import { ArrowBack, Close } from '@mui/icons-material'
 import { getUserById } from '../api/userApi'
+import { hapticFeedback } from '../../../utils/hapticFeedBack/hapticFeedBack'
 
 const Applications = () => {
     const { role, isLoading: isRoleLoading, isError: isRoleError } = useRole()
@@ -40,6 +41,8 @@ const Applications = () => {
     const [reviewsLoading, setReviewsLoading] = useState(false)
     const [reviewsError, setReviewsError] = useState(null)
     const navigate = useNavigate()
+
+    console.log(bookings)
 
     const fetchBookings = async (tab) => {
         setLoading(true)
@@ -75,12 +78,12 @@ const Applications = () => {
                 expert_rating:
                     booking.expert_rating || booking.user_rating || 0,
                 date_of_purchase: booking.date_of_purchase,
-                user_id: booking.user_id, // Assuming user_id is available in booking data
+                user_id: booking.user_id,
             }))
 
             normalizedBookings.sort((a, b) => {
                 const dateA = new Date(`${a.date}T${a.time}`)
-                const dateB = new Date(`${b.date}T${b.time}`)
+                const dateB = new Date(`${b.date}T${a.time}`)
                 return tab === 'future' ? dateA - dateB : dateB - dateA
             })
 
@@ -97,17 +100,22 @@ const Applications = () => {
         setReviewsError(null)
         try {
             const response = await getUserById(userId)
-            const sortedReviews = response.reviews.data.sort(
+            console.log('getUserById response:', response)
+            console.log('Reviews:', response.reviews)
+            if (!response.reviews) {
+                throw new Error('Reviews are missing in the response')
+            }
+            const sortedReviews = response.reviews.sort(
                 (a, b) => new Date(b.created_at) - new Date(a.created_at)
             )
             setReviews(sortedReviews)
         } catch (err) {
+            console.error('Error fetching reviews:', err)
             setReviewsError('Не удалось загрузить отзывы')
         } finally {
             setReviewsLoading(false)
         }
     }
-
     const handleOpenReviewsModal = (userId) => {
         fetchReviews(userId)
         setOpenReviewsModal(true)
@@ -156,7 +164,10 @@ const Applications = () => {
                         alignSelf: 'flex-start',
                         marginBottom: '1rem',
                     }}
-                    onClick={handleGoBack}
+                    onClick={() => {
+                        hapticFeedback('medium')
+                        handleGoBack()
+                    }}
                 >
                     <ArrowBack fontSize="large" />
                 </IconButton>
@@ -166,7 +177,10 @@ const Applications = () => {
                         variant={
                             activeTab === 'future' ? 'contained' : 'outlined'
                         }
-                        onClick={() => handleTabSwitch('future')}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleTabSwitch('future')
+                        }}
                         sx={{ mr: 1 }}
                     >
                         Предстоящие записи
@@ -175,7 +189,10 @@ const Applications = () => {
                         variant={
                             activeTab === 'completed' ? 'contained' : 'outlined'
                         }
-                        onClick={() => handleTabSwitch('completed')}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleTabSwitch('completed')
+                        }}
                     >
                         История
                     </Button>
@@ -298,11 +315,12 @@ const Applications = () => {
                                             activeTab === 'future' && (
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() =>
+                                                    onClick={() => {
+                                                        hapticFeedback('medium')
                                                         handleOpenReviewsModal(
                                                             booking.user_id
                                                         )
-                                                    }
+                                                    }}
                                                 >
                                                     Отзывы
                                                 </Button>
@@ -317,7 +335,10 @@ const Applications = () => {
 
             <Dialog
                 open={openReviewsModal}
-                onClose={handleCloseReviewsModal}
+                onClose={() => {
+                    hapticFeedback('medium')
+                    handleCloseReviewsModal()
+                }}
                 maxWidth="sm"
                 fullWidth
                 PaperProps={{
@@ -332,7 +353,12 @@ const Applications = () => {
                     }}
                 >
                     Отзывы
-                    <IconButton onClick={handleCloseReviewsModal}>
+                    <IconButton
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleCloseReviewsModal()
+                        }}
+                    >
                         <Close />
                     </IconButton>
                 </DialogTitle>
@@ -380,7 +406,10 @@ const Applications = () => {
                                     </Box>
                                     <Typography
                                         variant="body2"
-                                        sx={{ textAlign: 'center' }}
+                                        sx={{
+                                            margin: '0.5rem',
+                                            paddingTop: '0.3rem',
+                                        }}
                                     >
                                         {review.comment}
                                     </Typography>

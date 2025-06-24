@@ -28,6 +28,7 @@ import { useAddFavoriteMutation } from '../../utils/hooks/useAddFavoriteMutation
 import styles from './ExpertDetails.module.css'
 import { useRole } from '../../modules/Categories/utils/hooks/useRole/useRole'
 import { deleteExpert } from '../../utils/apiAdmin/apiAdmin'
+import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const ExpertDetails = () => {
     const { id } = useParams()
@@ -78,8 +79,10 @@ const ExpertDetails = () => {
     }
 
     const expert = data.expert
-    const reviews = data.reviews.data || []
+    const reviews = data.reviews || []
     const courses = expertServices?.data || []
+
+    // console.log(reviews)
 
     const handleAddFavorite = () => {
         mutation.mutate(id)
@@ -91,10 +94,10 @@ const ExpertDetails = () => {
         setActiveTab(newValue)
     }
 
-    const truncateDescription = (text, maxLength = 100) => {
-        if (text.length <= maxLength) return text
-        return text.substring(0, maxLength) + '...'
-    }
+    // const truncateDescription = (text, maxLength = 100) => {
+    //     if (text.length <= maxLength) return text
+    //     return text.substring(0, maxLength) + '...'
+    // }
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('ru-RU', {
@@ -133,7 +136,10 @@ const ExpertDetails = () => {
                     aria-label="back"
                     size="large"
                     sx={{ color: 'primary.main', alignSelf: 'flex-start' }}
-                    onClick={() => handleGoBack()}
+                    onClick={() => {
+                        hapticFeedback('medium')
+                        handleGoBack()
+                    }}
                 >
                     <ArrowBack fontSize="large" />
                 </IconButton>
@@ -177,7 +183,10 @@ const ExpertDetails = () => {
 
                 <Button
                     variant="contained"
-                    onClick={handleAddFavorite}
+                    onClick={() => {
+                        hapticFeedback('medium')
+                        handleAddFavorite()
+                    }}
                     disabled={mutation.isLoading}
                     sx={{
                         fontFamily: 'Nunito, sans-serif',
@@ -196,7 +205,10 @@ const ExpertDetails = () => {
                     <Button
                         variant="outlined"
                         color="error"
-                        onClick={() => handleDelete(id)}
+                        onClick={() => {
+                            hapticFeedback('medium')
+                            handleDelete(id)
+                        }}
                         sx={{
                             fontFamily: 'Nunito, sans-serif',
                             fontSize: '1.4rem',
@@ -208,7 +220,10 @@ const ExpertDetails = () => {
 
                 <Modal
                     open={openModal}
-                    onClose={() => setOpenModal(false)}
+                    onClose={() => {
+                        hapticFeedback('medium')
+                        setOpenModal(false)
+                    }}
                     closeAfterTransition
                 >
                     <Fade in={openModal}>
@@ -233,7 +248,10 @@ const ExpertDetails = () => {
 
                 <Tabs
                     value={activeTab}
-                    onChange={handleTabChange}
+                    onChange={(event, newValue) => {
+                        hapticFeedback('medium')
+                        handleTabChange(event, newValue)
+                    }}
                     variant="fullWidth"
                     sx={{ mb: 2 }}
                 >
@@ -340,64 +358,70 @@ const ExpertDetails = () => {
                                 Отзывы
                             </Typography>
                             {reviews.length > 0 ? (
-                                reviews.map((review) => (
-                                    <Box
-                                        key={review.id}
-                                        sx={{
-                                            mb: 3,
-                                            p: 2,
-                                            border: '1px solid #e0e0e0',
-                                            borderRadius: '8px',
-                                        }}
-                                    >
+                                reviews
+                                    .slice()
+                                    .reverse()
+                                    .map((review) => (
                                         <Box
+                                            key={review.id}
                                             sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                mb: 1,
+                                                mb: 3,
+                                                p: 2,
+                                                border: '1px solid #e0e0e0',
+                                                borderRadius: '8px',
                                             }}
                                         >
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent:
+                                                        'space-between',
+                                                    alignItems: 'center',
+                                                    mb: 1,
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="h6"
+                                                    sx={{
+                                                        fontFamily:
+                                                            'Nunito, sans-serif',
+                                                        fontSize: '1.2rem',
+                                                    }}
+                                                >
+                                                    {review.user.first_name}{' '}
+                                                    {review.user.last_name}
+                                                </Typography>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                    sx={{
+                                                        fontFamily:
+                                                            'Nunito, sans-serif',
+                                                        fontSize: '1rem',
+                                                    }}
+                                                >
+                                                    {formatDate(
+                                                        review.created_at
+                                                    )}
+                                                </Typography>
+                                            </Box>
+                                            <Rating
+                                                value={review.rating}
+                                                readOnly
+                                                sx={{ mb: 1 }}
+                                            />
                                             <Typography
-                                                variant="h6"
+                                                variant="body1"
                                                 sx={{
                                                     fontFamily:
                                                         'Nunito, sans-serif',
-                                                    fontSize: '1.2rem',
+                                                    fontSize: '1.1rem',
                                                 }}
                                             >
-                                                {review.user.first_name}{' '}
-                                                {review.user.last_name}
-                                            </Typography>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{
-                                                    fontFamily:
-                                                        'Nunito, sans-serif',
-                                                    fontSize: '1rem',
-                                                }}
-                                            >
-                                                {formatDate(review.created_at)}
+                                                {review.comment}
                                             </Typography>
                                         </Box>
-                                        <Rating
-                                            value={review.rating}
-                                            readOnly
-                                            sx={{ mb: 1 }}
-                                        />
-                                        <Typography
-                                            variant="body1"
-                                            sx={{
-                                                fontFamily:
-                                                    'Nunito, sans-serif',
-                                                fontSize: '1.1rem',
-                                            }}
-                                        >
-                                            {review.comment}
-                                        </Typography>
-                                    </Box>
-                                ))
+                                    ))
                             ) : (
                                 <Typography
                                     variant="body1"
@@ -443,7 +467,7 @@ const ExpertDetails = () => {
                                                 course.id
                                             )
                                             const message = encodeURIComponent(
-                                                `Здравствуйте! Хочу записаться на курс "${course.title}")`
+                                                `Здравствуйте! Хочу записаться на курс "${course.title}"`
                                             )
                                             if (isTelegramAvailable) {
                                                 return `https://t.me/${course.expert_username.replace(/^@/, '')}?text=${message}`
@@ -465,11 +489,22 @@ const ExpertDetails = () => {
                                         e.preventDefault()
                                         const link = await getLink()
                                         if (link !== '#') {
-                                            window.open(
-                                                link,
-                                                '_blank',
-                                                'noopener,noreferrer'
-                                            )
+                                            // Используем Telegram.WebApp.openLink для открытия ссылки
+                                            if (
+                                                window.Telegram &&
+                                                window.Telegram.WebApp
+                                            ) {
+                                                window.Telegram.WebApp.openLink(
+                                                    link
+                                                )
+                                            } else {
+                                                // Резервный вариант для окружений вне Telegram
+                                                window.open(
+                                                    link,
+                                                    '_blank',
+                                                    'noopener,noreferrer'
+                                                )
+                                            }
                                         } else {
                                             alert(
                                                 'Не удалось создать бронирование или контакты недоступны'
@@ -537,7 +572,10 @@ const ExpertDetails = () => {
                                             <Button
                                                 variant="contained"
                                                 disabled={isButtonDisabled}
-                                                onClick={handleBookingClick}
+                                                onClick={(e) => {
+                                                    hapticFeedback('medium')
+                                                    handleBookingClick(e)
+                                                }}
                                                 sx={{
                                                     fontFamily:
                                                         'Nunito, sans-serif',
@@ -546,16 +584,17 @@ const ExpertDetails = () => {
                                                     backgroundColor:
                                                         isTelegramAvailable
                                                             ? '#0088cc'
-                                                            : '#25D366', // Telegram blue, WhatsApp green
+                                                            : '#25D366',
                                                 }}
                                             >
                                                 Записаться
                                             </Button>
                                             <Button
                                                 variant="outlined"
-                                                onClick={() =>
+                                                onClick={() => {
+                                                    hapticFeedback('medium')
                                                     toggleExpanded(course.id)
-                                                }
+                                                }}
                                                 sx={{
                                                     fontFamily:
                                                         'Nunito, sans-serif',

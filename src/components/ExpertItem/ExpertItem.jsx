@@ -4,10 +4,10 @@ import { Close } from '@mui/icons-material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { removeFavorite } from '../../modules/Favorites/api/favorites'
 import { Rating } from '@mui/material'
+import { hapticFeedback } from '../../utils/hapticFeedBack/hapticFeedBack'
 
 const ExpertItem = ({ person, isFavorites = false }) => {
     const queryClient = useQueryClient()
-
     const mutation = useMutation({
         mutationFn: removeFavorite,
         onMutate: async (id) => {
@@ -41,6 +41,7 @@ const ExpertItem = ({ person, isFavorites = false }) => {
             to={`/expert/${person.id}`}
             key={person.id}
             className={`${styles.item} clickable`}
+            onClick={() => hapticFeedback('medium')}
         >
             {isFavorites && (
                 <Close
@@ -54,6 +55,7 @@ const ExpertItem = ({ person, isFavorites = false }) => {
                     onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
+                        hapticFeedback('medium')
                         handleRemove(person.id)
                     }}
                 />
@@ -70,7 +72,7 @@ const ExpertItem = ({ person, isFavorites = false }) => {
                 <p className={styles.role}>{person.profession}</p>
             </div>
             <Rating
-                value={person.rating}
+                value={person.rating ?? 0}
                 readOnly
                 sx={{ mb: 1 }}
                 className={styles.rating}

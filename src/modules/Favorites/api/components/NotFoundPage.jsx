@@ -2,7 +2,10 @@ import React from 'react'
 import styles from './notFoundPage.module.css'
 import imageNotFound from '../../../../assets/image/notFound.png'
 
-const NotFoundPage = () => {
+const NotFoundPage = ({
+    title = 'В избранном пока пусто',
+    text = 'Загляните в категории - возможно, там найдётся кто-то особенный',
+}) => {
     return (
         <div className={styles.wrapper}>
             <img
@@ -11,11 +14,8 @@ const NotFoundPage = () => {
                 className={styles.image}
             />
             <div className={styles.text}>
-                <h2 className={styles.title}>В избранном пока пусто</h2>
-                <p>
-                    Загляните в категории - возможно, там найдётся кто-то
-                    особенный
-                </p>
+                <h2 className={styles.title}>{title}</h2>
+                <p>{text}</p>
             </div>
         </div>
     )
