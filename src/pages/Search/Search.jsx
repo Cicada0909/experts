@@ -62,13 +62,13 @@ const Search = () => {
         position: '',
     })
     const [password, setPassword] = useState('')
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(true)
     const [error, setError] = useState('')
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['categories'],
         queryFn: getCategories,
-        enabled: isAuthenticated, // Only fetch if authenticated
+        enabled: isAuthenticated,
     })
 
     useEffect(() => {
@@ -78,7 +78,6 @@ const Search = () => {
         }
     }, [])
 
-    // Mutation for adding category
     const addCategoryMutation = useMutation({
         mutationFn: addCategory,
         onSuccess: () => {

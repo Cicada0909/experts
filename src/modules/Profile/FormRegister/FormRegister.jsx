@@ -41,7 +41,7 @@ const FormRegister = () => {
                 'image/jpg',
                 'image/webp',
             ].includes(file.type)
-            const isValidSize = file.size <= 8 * 1024 * 1024 // 8 MB
+            const isValidSize = file.size <= 2 * 1024 * 1024 // 8 MB
 
             if (!isValidType) {
                 alert('Разрешены только форматы: JPEG, PNG, JPG, WEBP')

@@ -264,13 +264,11 @@ const Calendar = () => {
 
     /////запись
     const handleBooking = async () => {
-        // Проверка обязательных полей
         if (!selectedTime || !selectedDate) {
             console.log('Не выбраны дата или время')
             return
         }
 
-        // Форматирование данных для отправки
         const bookingData = {
             date: format(selectedDate, 'dd.MM.yyyy'),
             time: format(parse(selectedTime, 'HH:mm:ss', new Date()), 'HH:mm'),
@@ -345,7 +343,7 @@ const Calendar = () => {
                         {filteredSlots.length > 0 ? (
                             filteredSlots.map((slot) => (
                                 <Box
-                                    key={`${slot.date}_${slot.time}`} // Уникальный ключ
+                                    key={`${slot.date}_${slot.time}`}
                                     sx={{ mb: 1 }}
                                 >
                                     <Button

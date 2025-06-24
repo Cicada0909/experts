@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Loading from '../Loading/Loading'
 import styles from './AuthProvider.module.css'
+import NotFoundPage from '../../modules/Favorites/api/components/notFoundPage'
 
 const fetchToken = async (initData) => {
     try {
@@ -128,7 +129,14 @@ const AuthProvider = ({ children }) => {
     }
 
     if (tokenError || !isAuthenticated) {
-        return <div>Ошибка или невалидный токен, попробуйте позже.</div>
+        return (
+            <div className={styles.notFound}>
+                <NotFoundPage
+                    title="В доступе отказано"
+                    text="Приложение доступно только через Telegram_bot"
+                />
+            </div>
+        )
     }
 
     return (

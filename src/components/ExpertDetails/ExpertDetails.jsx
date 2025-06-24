@@ -79,8 +79,10 @@ const ExpertDetails = () => {
     }
 
     const expert = data.expert
-    const reviews = data.reviews.data || []
+    const reviews = data.reviews || []
     const courses = expertServices?.data || []
+
+    // console.log(reviews)
 
     const handleAddFavorite = () => {
         mutation.mutate(id)
@@ -92,10 +94,10 @@ const ExpertDetails = () => {
         setActiveTab(newValue)
     }
 
-    const truncateDescription = (text, maxLength = 100) => {
-        if (text.length <= maxLength) return text
-        return text.substring(0, maxLength) + '...'
-    }
+    // const truncateDescription = (text, maxLength = 100) => {
+    //     if (text.length <= maxLength) return text
+    //     return text.substring(0, maxLength) + '...'
+    // }
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('ru-RU', {

@@ -78,7 +78,7 @@ const Applications = () => {
                 expert_rating:
                     booking.expert_rating || booking.user_rating || 0,
                 date_of_purchase: booking.date_of_purchase,
-                user_id: booking.user_id, // Assuming user_id is available in booking data
+                user_id: booking.user_id,
             }))
 
             normalizedBookings.sort((a, b) => {
@@ -100,17 +100,22 @@ const Applications = () => {
         setReviewsError(null)
         try {
             const response = await getUserById(userId)
-            const sortedReviews = response.reviews.data.sort(
+            console.log('getUserById response:', response)
+            console.log('Reviews:', response.reviews)
+            if (!response.reviews) {
+                throw new Error('Reviews are missing in the response')
+            }
+            const sortedReviews = response.reviews.sort(
                 (a, b) => new Date(b.created_at) - new Date(a.created_at)
             )
             setReviews(sortedReviews)
         } catch (err) {
+            console.error('Error fetching reviews:', err)
             setReviewsError('Не удалось загрузить отзывы')
         } finally {
             setReviewsLoading(false)
         }
     }
-
     const handleOpenReviewsModal = (userId) => {
         fetchReviews(userId)
         setOpenReviewsModal(true)
@@ -401,7 +406,10 @@ const Applications = () => {
                                     </Box>
                                     <Typography
                                         variant="body2"
-                                        sx={{ textAlign: 'center' }}
+                                        sx={{
+                                            margin: '0.5rem',
+                                            paddingTop: '0.3rem',
+                                        }}
                                     >
                                         {review.comment}
                                     </Typography>

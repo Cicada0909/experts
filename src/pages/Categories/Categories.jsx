@@ -210,7 +210,7 @@ const Categories = () => {
                     }}
                 >
                     <Typography id="modal-title" variant="h5">
-                        Оставьте пожалуйста вашу оценку и отзыв
+                        Оставьте пожалуйста ваш отзыв
                     </Typography>
                     <Box
                         sx={{
@@ -220,7 +220,7 @@ const Categories = () => {
                         }}
                     >
                         <Avatar sx={{ bgcolor: 'grey.400' }} />
-                        <Typography variant="subtitle1">
+                        <Typography variant="h5">
                             {currentReview?.first_name}{' '}
                             {currentReview?.last_name || ''}
                         </Typography>
