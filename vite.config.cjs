@@ -1,14 +1,13 @@
 import { defineConfig } from 'vite'
-const react = require('@vitejs/plugin-react');
-const fs = require('fs');
+const react = require('@vitejs/plugin-react')
+const fs = require('fs')
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: "/experts",
-  server: {
-    host: '0.0.0.0',
-    port: 3000
-  }
-
+    plugins: [react()],
+    base: '/experts',
+    server: {
+        host: '0.0.0.0',
+        port: 3000,
+    },
 })
