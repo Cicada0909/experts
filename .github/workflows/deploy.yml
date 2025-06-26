@@ -20,7 +20,7 @@ jobs:
             git fetch
             git pull
 
-      - name: Update docker files
+      - name: Build & Copy static files
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
