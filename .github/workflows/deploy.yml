@@ -17,8 +17,8 @@ jobs:
           script: |
             cd ~/experts
 
-            git fetch
-            git pull
+            git fetch origin
+            git reset --hard origin/master
 
       - name: Build & Copy static files
         uses: appleboy/ssh-action@master
@@ -30,6 +30,10 @@ jobs:
           script: |
             cd ~/experts
 
+            rm -rf /var/www/html/*
+            rm -rf dist
+
             npm i
             npm run build
+            
             cp -r dist/* /var/www/html/
