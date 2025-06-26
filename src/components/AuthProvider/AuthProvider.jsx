@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Loading from '../Loading/Loading'
 import styles from './AuthProvider.module.css'
 import NotFoundPage from '../../modules/Favorites/api/components/NotFoundPage.jsx'
 
@@ -42,7 +41,6 @@ const useAuth = () => {
     const [logs, setLogs] = useState([])
     const [token, setToken] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const log = (msg) => {
@@ -54,7 +52,6 @@ const useAuth = () => {
 
     useEffect(() => {
         const authorize = async () => {
-            setLoading(true)
             setError(null)
 
             if (!initData) {
@@ -62,7 +59,7 @@ const useAuth = () => {
                     'initData отсутствует. Запустите приложение через Telegram.'
                 )
                 setError(new Error('initData отсутствует'))
-                setLoading(false)
+                setIsAuthenticated(false)
                 return
             }
 
@@ -93,8 +90,6 @@ const useAuth = () => {
                 log('Ошибка авторизации: ' + err.message)
                 setError(err)
                 setIsAuthenticated(false)
-            } finally {
-                setLoading(false)
             }
         }
 
@@ -102,31 +97,17 @@ const useAuth = () => {
     }, [])
 
     return {
-        tokenLoading: loading,
-        tokenError: error,
         isAuthenticated,
+        tokenError: error,
         logs,
         token,
     }
 }
 
 const AuthProvider = ({ children }) => {
-    const { tokenLoading, isAuthenticated, tokenError, logs } = useAuth()
+    const { isAuthenticated, tokenError, logs } = useAuth()
 
-    // Логи для отладки
-    console.log('AuthProvider state:', {
-        tokenLoading,
-        isAuthenticated,
-        tokenError,
-    })
-
-    if (tokenLoading) {
-        return (
-            <div className={styles.loading__wrapper}>
-                <Loading />
-            </div>
-        )
-    }
+    console.log('AuthProvider state:', { isAuthenticated, tokenError })
 
     if (tokenError || !isAuthenticated) {
         return (
