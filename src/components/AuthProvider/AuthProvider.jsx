@@ -132,8 +132,7 @@ const AuthProvider = ({ children }) => {
         return (
             <div className={styles.notFound}>
                 <NotFoundPage
-                    // title="В доступе отказано"
-                    title="Проверка"
+                    title="В доступе отказано"
                     text="Приложение доступно только через Telegram_bot"
                 />
             </div>
