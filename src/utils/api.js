@@ -11,8 +11,7 @@ export const apiRequest = async (props) => {
 
     return axios.request({
         ...props,
-        baseURL:
-            'https://4da1-2a03-32c0-5002-ba09-9573-6d88-96f2-9872.ngrok-free.app',
+        baseURL: import.meta.env.VITE_API_URL,
         headers,
     })
 }
