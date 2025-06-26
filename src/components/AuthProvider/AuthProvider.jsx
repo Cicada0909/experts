@@ -52,9 +52,9 @@ const useAuth = () => {
 
     // я AAGCx6o1AgAAAILHqjUK9Jw1&user=%7B%22id%22%3A5195351938%2C%22first_name%22%3A%22%D0%90%D0%BB%D0%B8%D0%B1%D0%B5%D0%BA%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22cicada98%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FU8mJJotcmRJ5XYN_BmUdr3sbjmhznzvLYGEKOCtbIr-G1nhi08nLzyAweEQGDGVZ.svg%22%7D&auth_date=1746606487&signature=dIOkHPpKMsbzT-AbHLBlUSnvq3P-LD1mFxMq8yZ6j4kqbbG-WPYEGAsl7VTvIEPrHIdWqyN2YGVA-n6DGYLYCg&hash=997f2c49224ecffe45f4f679c2d887a355a96cf13aba439e03909f886aa8f723
 
-    // const initData = window?.Telegram?.WebApp?.initData
-    const initData =
-        'query_id=AAGCx6o1AgAAAILHqjUK9Jw1&user=%7B%22id%22%3A5195351938%2C%22first_name%22%3A%22%D0%90%D0%BB%D0%B8%D0%B1%D0%B5%D0%BA%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22cicada98%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FU8mJJotcmRJ5XYN_BmUdr3sbjmhznzvLYGEKOCtbIr-G1nhi08nLzyAweEQGDGVZ.svg%22%7D&auth_date=1746606487&signature=dIOkHPpKMsbzT-AbHLBlUSnvq3P-LD1mFxMq8yZ6j4kqbbG-WPYEGAsl7VTvIEPrHIdWqyN2YGVA-n6DGYLYCg&hash=997f2c49224ecffe45f4f679c2d887a355a96cf13aba439e03909f886aa8f723'
+    const initData = window?.Telegram?.WebApp?.initData
+    // const initData =
+    //     'query_id=AAGCx6o1AgAAAILHqjUK9Jw1&user=%7B%22id%22%3A5195351938%2C%22first_name%22%3A%22%D0%90%D0%BB%D0%B8%D0%B1%D0%B5%D0%BA%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22cicada98%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FU8mJJotcmRJ5XYN_BmUdr3sbjmhznzvLYGEKOCtbIr-G1nhi08nLzyAweEQGDGVZ.svg%22%7D&auth_date=1746606487&signature=dIOkHPpKMsbzT-AbHLBlUSnvq3P-LD1mFxMq8yZ6j4kqbbG-WPYEGAsl7VTvIEPrHIdWqyN2YGVA-n6DGYLYCg&hash=997f2c49224ecffe45f4f679c2d887a355a96cf13aba439e03909f886aa8f723'
 
     useEffect(() => {
         const authorize = async () => {
