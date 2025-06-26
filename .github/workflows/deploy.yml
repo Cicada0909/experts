@@ -1,0 +1,39 @@
+name: Frontend Deploy
+
+on:
+  [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update repository
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ~/experts
+
+            git fetch origin
+            git reset --hard origin/master
+
+      - name: Build & Copy static files
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ~/experts
+
+            rm -rf /var/www/html/*
+            rm -rf dist
+
+            npm i
+            npm run build
+            
+            cp -r dist/* /var/www/html/

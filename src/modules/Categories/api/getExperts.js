@@ -1,4 +1,4 @@
-import { apiRequest } from "../../../utils/api"
+import { apiRequest } from '../../../utils/api'
 
 export const getExpertsSearchByCategory = async ({ queryKey }) => {
     const [_key, subtitle, search, filters] = queryKey
@@ -19,19 +19,17 @@ export const getExpertsSearchByCategory = async ({ queryKey }) => {
 }
 
 export const getExpertById = async (expertId) => {
-  const response = await apiRequest({
-    url: `/api/experts/${expertId}`,
-    method: 'GET',
-  })
-  return response.data
+    const response = await apiRequest({
+        url: `/api/experts/${expertId}`,
+        method: 'GET',
+    })
+    return response.data
 }
 
 export const getSlotsExpertById = async (expertId) => {
-  const response = await apiRequest({
-    url: `/api/bookings/available/${expertId}`,
-    method: 'GET',
-  })
-  return response.data
+    const response = await apiRequest({
+        url: `/api/bookings/available/${expertId}`,
+        method: 'GET',
+    })
+    return response.data
 }
-
-

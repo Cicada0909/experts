@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Loading from '../Loading/Loading'
 import styles from './AuthProvider.module.css'
-import NotFoundPage from '../../modules/Favorites/api/components/notFoundPage'
+import NotFoundPage from '../../modules/Favorites/api/components/NotFoundPage.jsx'
 
 const fetchToken = async (initData) => {
     try {

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './notFoundPage.module.css'
+import styles from './NotFoundPage.module.css'
 import imageNotFound from '../../../../assets/image/notFound.png'
 
 const NotFoundPage = ({
