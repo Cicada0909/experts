@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            cd ~/monorepo
+            cd ~/experts
 
             npm i
             npm run build
