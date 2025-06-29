@@ -83,7 +83,9 @@ const FormRegister = () => {
             })
         },
         onSuccess: (response) => {
-            alert('Регистрация успешна! Перезайдите в приложение')
+            alert(
+                'Регистрация успешна! Перезайдите в приложение или нажмите на профиль в меню'
+            )
             console.log(response.data)
             setFormData({
                 first_name: '',

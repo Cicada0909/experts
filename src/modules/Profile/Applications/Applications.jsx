@@ -65,16 +65,13 @@ const Applications = () => {
                 id:
                     booking.id ||
                     `${booking.date}-${booking.time}-${booking.expert_phone}`,
-                service_title: booking.service_title || 'N/A',
+                service_title: booking.service_title || '',
                 date: booking.date,
                 time: booking.time,
-                expert_first_name: booking.expert_first_name || 'N/A',
+                expert_first_name: booking.expert_first_name || '',
                 expert_last_name: booking.expert_last_name || '',
-                expert_phone:
-                    booking.expert_phone || booking.user_phone || 'N/A',
-                expert_photo:
-                    booking.expert_photo ||
-                    'https://randomuser.me/api/portraits/lego/1.jpg',
+                expert_phone: booking.expert_phone || booking.user_phone || '',
+                expert_photo: booking.expert_photo || '',
                 expert_rating:
                     booking.expert_rating || booking.user_rating || 0,
                 date_of_purchase: booking.date_of_purchase,
@@ -234,15 +231,17 @@ const Applications = () => {
                                         alignItems="center"
                                         mb={2}
                                     >
-                                        <Avatar
-                                            src={booking.expert_photo}
-                                            alt={`${booking.expert_first_name} ${booking.expert_last_name}`}
-                                            sx={{
-                                                width: 56,
-                                                height: 56,
-                                                mr: 2,
-                                            }}
-                                        />
+                                        {booking.expert_photo ? (
+                                            <Avatar
+                                                src={booking.expert_photo}
+                                                alt={`${booking.expert_first_name} ${booking.expert_last_name}`}
+                                                sx={{
+                                                    width: 56,
+                                                    height: 56,
+                                                    mr: 2,
+                                                }}
+                                            />
+                                        ) : null}
                                         <Box flexGrow={1}>
                                             <Typography variant="h6">
                                                 {booking.expert_first_name}{' '}

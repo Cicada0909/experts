@@ -143,7 +143,8 @@ const Profile = () => {
         onError: (error) => {
             alert(
                 'Ошибка при обновлении профиля: ' +
-                    (error.response?.data?.message || error.message)
+                    (error.response?.data?.message || error.message) +
+                    'Возможно вы пытались загрузить снимок(сделать снимок), попробуйте загрузить с галерии'
             )
         },
     })
