@@ -82,7 +82,7 @@ const router = createHashRouter([
             },
             {
                 path: '*',
-                loader: () => redirect(pageRoutes.categoriesRoutes.categories),
+                element: <Categories />,
             },
         ],
     },
