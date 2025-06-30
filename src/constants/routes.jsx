@@ -80,6 +80,10 @@ const router = createHashRouter([
                 path: pageRoutes.expertDate,
                 element: <Calendar />,
             },
+            {
+                path: '*',
+                loader: () => redirect(pageRoutes.categoriesRoutes.categories),
+            },
         ],
     },
 ])
