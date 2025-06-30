@@ -8,10 +8,13 @@ const queryClient = new QueryClient()
 
 function App() {
     useEffect(() => {
-        if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.disableVerticalSwipes()
+        const tg = window.Telegram?.WebApp
 
-            if (window.Telegram.WebApp.version >= '7.7') {
+        if (tg) {
+            tg.expand()
+            tg.disableVerticalSwipes()
+
+            if (tg.version >= '7.7') {
             } else {
             }
         }
