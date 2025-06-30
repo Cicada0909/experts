@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import styles from '../Favorites/Favorites.module.css'
 import ExpertItem from '../../components/ExpertItem/ExpertItem'
 import { useQuery } from '@tanstack/react-query'
@@ -7,20 +7,13 @@ import ExpertsListSkeleton from '../../modules/Categories/components/ExpertsList
 import NotFoundPage from '../../modules/Favorites/api/components/NotFoundPage.jsx'
 
 const Favorites = () => {
-    const wrapperRef = useRef(null)
     const { data, isLoading, isError } = useQuery({
         queryKey: ['favorites'],
         queryFn: getFavorites,
     })
 
-    useEffect(() => {
-        if (wrapperRef.current) {
-            wrapperRef.current.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-    }, [])
-
     return (
-        <div className={styles.wrapper} ref={wrapperRef}>
+        <div className={styles.wrapper}>
             {isLoading ? (
                 <div className={styles.items}>
                     <ExpertsListSkeleton />
