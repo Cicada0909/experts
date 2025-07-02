@@ -383,15 +383,21 @@ const Categories = () => {
                         ))}
                     </>
                 )}
-                {isLoadingExperts && <ExpertsListSkeleton />}
-                {dataExperts?.data.map((person) => (
-                    <ExpertItem
-                        key={person.id}
-                        person={person}
-                        className={styles.item}
-                    />
-                ))}
-                <Outlet context={{ search: debouncedSearch, filters }} />
+                {(search || subtitle || id) && (
+                    <>
+                        {isLoadingExperts && <ExpertsListSkeleton />}
+                        {dataExperts?.data.map((person) => (
+                            <ExpertItem
+                                key={person.id}
+                                person={person}
+                                className={styles.item}
+                            />
+                        ))}
+                        <Outlet
+                            context={{ search: debouncedSearch, filters }}
+                        />
+                    </>
+                )}
             </div>
         </div>
     )
