@@ -94,7 +94,7 @@ const Profile = () => {
                 'image/jpg',
                 'image/webp',
             ].includes(file.type)
-            const isValidSize = file.size <= 8 * 1024 * 1024 // 8 MB
+            const isValidSize = file.size <= 4 * 1024 * 1024 // 8 MB
 
             if (!isValidType) {
                 alert('Разрешены только форматы: JPEG, PNG, JPG, WEBP')
@@ -102,7 +102,7 @@ const Profile = () => {
             }
 
             if (!isValidSize) {
-                alert('Максимальный размер изображения — 8 МБ')
+                alert('Максимальный размер изображения — 4 МБ')
                 return
             }
 
@@ -144,7 +144,7 @@ const Profile = () => {
             alert(
                 'Ошибка при обновлении профиля: ' +
                     (error.response?.data?.message || error.message) +
-                    'Возможно вы пытались загрузить снимок(сделать снимок), попробуйте загрузить с галерии'
+                    ' Возможно вы пытались загрузить снимок(сделать снимок), попробуйте загрузить с галерии'
             )
         },
     })
