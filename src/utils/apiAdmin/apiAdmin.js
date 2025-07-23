@@ -1,4 +1,4 @@
-import { apiRequest } from '../api'
+import { apiRequest, apiRequestWithBlob } from '../api'
 
 export const deleteExpert = async (expertId) => {
     const response = await apiRequest({
@@ -15,17 +15,14 @@ export const downloadExpertsExcel = async () => {
         responseType: 'blob',
     })
 
-    const base64 = await new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result.split(',')[1]) // Remove data: prefix
-        reader.readAsDataURL(response.data)
-    })
-
-    window.Telegram.WebApp.downloadFile({
-        url: base64,
-        name: 'experts.xlsx',
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    })
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'users.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
 
     return response.data
 }
@@ -37,17 +34,14 @@ export const downloadUsers = async () => {
         responseType: 'blob',
     })
 
-    const base64 = await new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result.split(',')[1])
-        reader.readAsDataURL(response.data)
-    })
-
-    window.Telegram.WebApp.downloadFile({
-        url: base64,
-        name: 'users.xlsx',
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    })
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'users.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
 
     return response.data
 }
@@ -59,17 +53,14 @@ export const downloadStatiscs = async () => {
         responseType: 'blob',
     })
 
-    const base64 = await new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result.split(',')[1])
-        reader.readAsDataURL(response.data)
-    })
-
-    window.Telegram.WebApp.downloadFile({
-        url: base64,
-        name: 'statistics.xlsx',
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    })
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'users.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
 
     return response.data
 }
@@ -81,17 +72,14 @@ export const downloadApplications = async () => {
         responseType: 'blob',
     })
 
-    const base64 = await new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result.split(',')[1])
-        reader.readAsDataURL(response.data)
-    })
-
-    window.Telegram.WebApp.downloadFile({
-        url: base64,
-        name: 'rejected-bookings.xlsx',
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    })
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'users.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
 
     return response.data
 }
