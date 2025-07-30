@@ -152,65 +152,6 @@ const Profile = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const validInputRegex = /^[a-zA-Zа-яА-Я0-9\s,.]+$/
-        const onlyDigitsRegex = /^[0-9]+$/
-
-        const errors = []
-        if (!formData.first_name) {
-            errors.push('Имя')
-        } else if (!validInputRegex.test(formData.first_name)) {
-            errors.push('Имя содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.first_name)) {
-            errors.push('Имя не может состоять только из цифр')
-        }
-
-        if (!formData.last_name) {
-            errors.push('Фамилия')
-        } else if (!validInputRegex.test(formData.last_name)) {
-            errors.push('Фамилия содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.last_name)) {
-            errors.push('Фамилия не может состоять только из цифр')
-        }
-
-        if (!formData.profession) {
-            errors.push('Профессия')
-        } else if (!validInputRegex.test(formData.profession)) {
-            errors.push('Профессия содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.profession)) {
-            errors.push('Профессия не может состоять только из цифр')
-        }
-
-        if (!formData.biography) {
-            errors.push('Биография')
-        } else if (!validInputRegex.test(formData.biography)) {
-            errors.push('Биография содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.biography)) {
-            errors.push('Биография не может состоять только из цифр')
-        }
-
-        if (!formData.education) {
-            errors.push('Образование')
-        } else if (!validInputRegex.test(formData.education)) {
-            errors.push('Образование содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.education)) {
-            errors.push('Образование не может состоять только из цифр')
-        }
-
-        if (!formData.experience) {
-            errors.push('Опыт')
-        } else if (!validInputRegex.test(formData.experience)) {
-            errors.push('Опыт содержит недопустимые символы')
-        } else if (onlyDigitsRegex.test(formData.experience)) {
-            errors.push('Опыт не может состоять только из цифр')
-        }
-
-        if (errors.length > 0) {
-            alert(
-                `Пожалуйста, заполните корректно следующие поля: ${errors.join(', ')}. Разрешены только буквы, цифры, пробелы, точки и запятые. Поля не могут состоять только из цифр.`
-            )
-            return
-        }
-
         mutation.mutate()
     }
 
